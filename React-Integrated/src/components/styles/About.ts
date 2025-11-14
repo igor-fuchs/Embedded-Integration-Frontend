@@ -17,7 +17,6 @@ export const StyleAbout = styled.section`
     }
 
     .about-content {
-        padding: 96px 0px;
         width: 100%;
         max-width: 1152px;
         display: flex;
@@ -331,38 +330,7 @@ export const StyleAbout = styled.section`
     }
 
     @media (max-width: 1200px) {
-        padding: 80px 60px;
-
-        .about-header {
-            padding: 0 120px;
-        }
-
-        .about-grid {
-            gap: 32px;
-        }
-    }
-
-    @media (max-width: 1024px) {
-        padding: 64px 40px;
-
-        .about-content {
-            gap: 48px;
-        }
-
-        .about-header {
-            padding: 0 80px;
-        }
-
-        .about-title {
-            font-size: 40px;
-            line-height: 40px;
-        }
-
-        .about-description {
-            font-size: 18px;
-            line-height: 26px;
-        }
-
+        padding: 60px 40px;
         .about-grid {
             flex-direction: column;
             gap: 32px;
@@ -375,15 +343,31 @@ export const StyleAbout = styled.section`
         }
     }
 
+    @media (max-width: 1024px) {
+
+        .about-content {
+            gap: 48px;
+        }
+
+        .about-title {
+            font-size: 40px;
+            line-height: 40px;
+        }
+
+        .about-description {
+            font-size: 18px;
+            line-height: 26px;
+        }
+
+        
+
+        
+    }
+
     @media (max-width: 768px) {
-        padding: 48px 24px;
 
         .about-content {
             gap: 40px;
-        }
-
-        .about-header {
-            padding: 0 40px;
         }
 
         .about-title {
@@ -423,10 +407,6 @@ export const StyleAbout = styled.section`
             gap: 32px;
         }
 
-        .about-header {
-            padding: 0 20px;
-        }
-
         .about-title {
             font-size: 28px;
             line-height: 32px;
@@ -464,10 +444,6 @@ export const StyleAbout = styled.section`
 
     @media (max-width: 480px) {
         padding: 32px 16px;
-
-        .about-header {
-            padding: 0;
-        }
 
         .about-title {
             font-size: 24px;

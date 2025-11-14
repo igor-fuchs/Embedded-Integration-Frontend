@@ -317,7 +317,6 @@ export const StyleLiveDemo = styled.section`
     }
 
     @media (max-width: 1200px) {
-        padding: 80px 40px;
 
         .demo-container {
             padding: 0 32px;
