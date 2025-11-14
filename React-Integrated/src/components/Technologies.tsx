@@ -95,9 +95,9 @@ export default function Technologies() {
                                     </defs>
                                 </svg>
                             </div>
-                            <h3 className="tech-title">Siemens PLC</h3>
+                            <h3 className="tech-title">Communication Protocols</h3>
                             <p className="tech-description">
-                                Industrial programmable logic controllers providing reliable automation control and data acquisition.
+                                OPC UA and HTTP enabling communication between industrial devices and services.
                             </p>
                         </div>
 
