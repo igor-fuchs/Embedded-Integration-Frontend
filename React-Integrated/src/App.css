@@ -1,7 +1,10 @@
 #root {
-    text-align: center;
     display: flex;
     flex-grow: 1;
     flex-direction: column;
     background-color: #020617;
+}
+
+:root{
+    --header-height: 65px;
 }

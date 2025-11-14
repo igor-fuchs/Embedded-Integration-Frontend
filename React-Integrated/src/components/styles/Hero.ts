@@ -3,8 +3,8 @@ import styled from "styled-components";
 export const StyleHero = styled.section`
     position: relative;
     width: 100%;
-    min-height: 100vh;
-    padding-top: 65px;
+    height: 100vh;
+    padding-top: var(--header-height);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,7 +20,12 @@ export const StyleHero = styled.section`
     .gradient-overlay {
         position: absolute;
         inset: 0;
-        background: linear-gradient(135deg, #020617 0%, #0F172A 35.36%, rgba(23, 37, 84, 0.50) 70.71%);
+        background: linear-gradient(
+            135deg,
+            #020617 0%,
+            #0f172a 35.36%,
+            rgba(23, 37, 84, 0.5) 70.71%
+        );
     }
 
     .blur-circle {
@@ -31,7 +36,7 @@ export const StyleHero = styled.section`
     .blur-circle-left {
         width: 128px;
         height: 128px;
-        background: rgba(59, 130, 246, 0.10);
+        background: rgba(59, 130, 246, 0.1);
         left: 40px;
         top: 80px;
         filter: blur(60px);
@@ -60,14 +65,24 @@ export const StyleHero = styled.section`
 
     .line-left {
         height: 128px;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, #60A5FA 50%, rgba(0, 0, 0, 0.00) 100%);
+        background: linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0) 0%,
+            #60a5fa 50%,
+            rgba(0, 0, 0, 0) 100%
+        );
         left: 25%;
         top: 224px;
     }
 
     .line-right {
         height: 96px;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, #22D3EE 50%, rgba(0, 0, 0, 0.00) 100%);
+        background: linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0) 0%,
+            #22d3ee 50%,
+            rgba(0, 0, 0, 0) 100%
+        );
         right: 34%;
         top: 448px;
     }
@@ -92,7 +107,7 @@ export const StyleHero = styled.section`
         padding: 13px 25px;
         border-radius: 9999px;
         border: 1px solid #334155;
-        background: rgba(30, 41, 59, 0.50);
+        background: rgba(30, 41, 59, 0.5);
         backdrop-filter: blur(10px);
     }
 
@@ -100,13 +115,14 @@ export const StyleHero = styled.section`
         width: 8px;
         height: 8px;
         border-radius: 9999px;
-        background: #4ADE80;
+        background: #4ade80;
         opacity: 0.9988;
         animation: pulse 2s ease-in-out infinite;
     }
 
     @keyframes pulse {
-        0%, 100% {
+        0%,
+        100% {
             opacity: 1;
             box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
         }
@@ -117,8 +133,13 @@ export const StyleHero = styled.section`
     }
 
     .status-text {
-        color: #CBD5E1;
-        font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+        color: #cbd5e1;
+        font-family:
+            Inter,
+            -apple-system,
+            Roboto,
+            Helvetica,
+            sans-serif;
         font-size: 14px;
         font-weight: 400;
         line-height: normal;
@@ -126,24 +147,34 @@ export const StyleHero = styled.section`
 
     .hero-title {
         margin: 0;
-        font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+        font-family:
+            Inter,
+            -apple-system,
+            Roboto,
+            Helvetica,
+            sans-serif;
         font-size: 72px;
         font-weight: 700;
         line-height: 72px;
     }
 
     .title-white {
-        color: #FFFFFF;
+        color: #ffffff;
     }
 
     .title-blue {
-        color: #60A5FA;
+        color: #60a5fa;
     }
 
     .hero-subtitle {
         margin: 0;
-        color: #CBD5E1;
-        font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+        color: #cbd5e1;
+        font-family:
+            Inter,
+            -apple-system,
+            Roboto,
+            Helvetica,
+            sans-serif;
         font-size: 24px;
         font-weight: 400;
         line-height: 32px;
@@ -151,7 +182,7 @@ export const StyleHero = styled.section`
     }
 
     .highlight {
-        color: #60A5FA;
+        color: #60a5fa;
         font-weight: 600;
     }
 
@@ -170,7 +201,12 @@ export const StyleHero = styled.section`
         gap: 8px;
         padding: 19px 28px;
         border-radius: 12px;
-        font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+        font-family:
+            Inter,
+            -apple-system,
+            Roboto,
+            Helvetica,
+            sans-serif;
         font-size: 18px;
         font-weight: 600;
         line-height: normal;
@@ -185,13 +221,13 @@ export const StyleHero = styled.section`
     }
 
     .btn-primary {
-        background: linear-gradient(90deg, #2563EB 0%, #0891B2 100%);
+        background: linear-gradient(90deg, #2563eb 0%, #0891b2 100%);
         border: none;
-        color: #FFFFFF;
-        box-shadow: 0 0 20px 0 rgba(59, 130, 246, 0.30);
+        color: #ffffff;
+        box-shadow: 0 0 20px 0 rgba(59, 130, 246, 0.3);
 
         &:hover {
-            box-shadow: 0 0 30px 0 rgba(59, 130, 246, 0.50);
+            box-shadow: 0 0 30px 0 rgba(59, 130, 246, 0.5);
             transform: translateY(-2px);
         }
 
@@ -201,17 +237,17 @@ export const StyleHero = styled.section`
     }
 
     .btn-secondary {
-        background: rgba(0, 0, 0, 0.00);
+        background: rgba(0, 0, 0, 0);
         border: 2px solid #475569;
-        color: #FFFFFF;
+        color: #ffffff;
 
         &:hover {
-            border-color: #60A5FA;
-            background: rgba(96, 165, 250, 0.10);
+            border-color: #60a5fa;
+            background: rgba(96, 165, 250, 0.1);
         }
 
         &:active {
-            background: rgba(96, 165, 250, 0.20);
+            background: rgba(96, 165, 250, 0.2);
         }
     }
 
@@ -226,7 +262,8 @@ export const StyleHero = styled.section`
     }
 
     @keyframes bounce {
-        0%, 100% {
+        0%,
+        100% {
             transform: translateY(0);
         }
         50% {
@@ -255,8 +292,6 @@ export const StyleHero = styled.section`
     }
 
     @media (max-width: 768px) {
-        min-height: calc(100vh - 60px);
-
         .hero-content {
             padding: 0 1.5rem;
             gap: 1.5rem;

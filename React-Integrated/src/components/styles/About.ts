@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const StyleAbout = styled.section`
     width: 100%;
-    min-height: calc(100vh - 65px); // Adjust for header height
-    background: #0F172A;
+    height: calc(100vh - var(--header-height)); // Adjust for header height
+    background: #0f172a;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,6 +17,7 @@ export const StyleAbout = styled.section`
     }
 
     .about-content {
+        padding: 96px 0px;
         width: 100%;
         max-width: 1152px;
         display: flex;
@@ -37,9 +38,14 @@ export const StyleAbout = styled.section`
 
     .about-title {
         margin: 0;
-        color: #FFF;
+        color: #fff;
         text-align: center;
-        font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+        font-family:
+            Inter,
+            -apple-system,
+            Roboto,
+            Helvetica,
+            sans-serif;
         font-size: 48px;
         font-weight: 700;
         line-height: 48px;
@@ -47,9 +53,14 @@ export const StyleAbout = styled.section`
 
     .about-description {
         margin: 0;
-        color: #94A3B8;
+        color: #94a3b8;
         text-align: center;
-        font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+        font-family:
+            Inter,
+            -apple-system,
+            Roboto,
+            Helvetica,
+            sans-serif;
         font-size: 20px;
         font-weight: 400;
         line-height: 28px;
@@ -81,12 +92,12 @@ export const StyleAbout = styled.section`
         align-items: center;
         border-radius: 16px;
         border: 1px solid #334155;
-        background: rgba(30, 41, 59, 0.50);
+        background: rgba(30, 41, 59, 0.5);
         transition: all 0.3s ease;
 
         &:hover {
             border-color: #475569;
-            background: rgba(30, 41, 59, 0.70);
+            background: rgba(30, 41, 59, 0.7);
             transform: translateY(-2px);
         }
     }
@@ -110,11 +121,11 @@ export const StyleAbout = styled.section`
         border-radius: 12px;
 
         &.industrial {
-            background: #2563EB;
+            background: #2563eb;
         }
 
         &.web {
-            background: #0891B2;
+            background: #0891b2;
         }
 
         svg {
@@ -134,8 +145,13 @@ export const StyleAbout = styled.section`
 
     .feature-title {
         margin: 0;
-        color: #FFF;
-        font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+        color: #fff;
+        font-family:
+            Inter,
+            -apple-system,
+            Roboto,
+            Helvetica,
+            sans-serif;
         font-size: 20px;
         font-weight: 600;
         line-height: 28px;
@@ -143,8 +159,13 @@ export const StyleAbout = styled.section`
 
     .feature-description {
         margin: 0;
-        color: #CBD5E1;
-        font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+        color: #cbd5e1;
+        font-family:
+            Inter,
+            -apple-system,
+            Roboto,
+            Helvetica,
+            sans-serif;
         font-size: 16px;
         font-weight: 400;
         line-height: 26px;
@@ -167,12 +188,12 @@ export const StyleAbout = styled.section`
         align-items: center;
         border-radius: 16px;
         border: 1px solid #334155;
-        background: rgba(30, 41, 59, 0.30);
+        background: rgba(30, 41, 59, 0.3);
         transition: all 0.3s ease;
 
         &:hover {
             border-color: #475569;
-            background: rgba(30, 41, 59, 0.50);
+            background: rgba(30, 41, 59, 0.5);
         }
     }
 
@@ -194,24 +215,29 @@ export const StyleAbout = styled.section`
     }
 
     .flow-label {
-        font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+        font-family:
+            Inter,
+            -apple-system,
+            Roboto,
+            Helvetica,
+            sans-serif;
         font-size: 16px;
         font-weight: 600;
         line-height: 24px;
 
         &.factory {
-            color: #60A5FA;
+            color: #60a5fa;
         }
 
         &.react {
-            color: #22D3EE;
+            color: #22d3ee;
         }
     }
 
     .flow-line {
         flex: 1;
         height: 2px;
-        background: linear-gradient(90deg, #60A5FA 0%, #22D3EE 100%);
+        background: linear-gradient(90deg, #60a5fa 0%, #22d3ee 100%);
     }
 
     .central-icon-wrapper {
@@ -231,8 +257,8 @@ export const StyleAbout = styled.section`
         justify-content: center;
         align-items: center;
         border-radius: 9999px;
-        background: linear-gradient(135deg, #2563EB 0%, #0891B2 70.71%);
-        box-shadow: 0 0 20px 0 rgba(37, 99, 235, 0.30);
+        background: linear-gradient(135deg, #2563eb 0%, #0891b2 70.71%);
+        box-shadow: 0 0 20px 0 rgba(37, 99, 235, 0.3);
 
         svg {
             width: 20px;
@@ -242,9 +268,14 @@ export const StyleAbout = styled.section`
 
     .portal-label {
         margin: 0;
-        color: #CBD5E1;
+        color: #cbd5e1;
         text-align: center;
-        font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+        font-family:
+            Inter,
+            -apple-system,
+            Roboto,
+            Helvetica,
+            sans-serif;
         font-size: 16px;
         font-weight: 400;
         line-height: 24px;
@@ -273,22 +304,27 @@ export const StyleAbout = styled.section`
         border-radius: 9999px;
 
         &.simulation {
-            background: #4ADE80;
+            background: #4ade80;
         }
 
         &.processing {
-            background: #FACC15;
+            background: #facc15;
         }
 
         &.interface {
-            background: #60A5FA;
+            background: #60a5fa;
         }
     }
 
     .status-text {
-        color: #94A3B8;
+        color: #94a3b8;
         text-align: center;
-        font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+        font-family:
+            Inter,
+            -apple-system,
+            Roboto,
+            Helvetica,
+            sans-serif;
         font-size: 12px;
         font-weight: 400;
         line-height: 16px;
