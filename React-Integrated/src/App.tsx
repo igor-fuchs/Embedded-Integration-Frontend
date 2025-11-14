@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import Technologies from './components/Technologies';
 import About from './components/About';
+import LiveDemo from './components/LiveDemo';
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
       <Hero />
       <About />
       <Technologies />
+      <LiveDemo />
     </div>
   );
 }
