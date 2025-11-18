@@ -4,6 +4,8 @@ import Hero from './components/Hero';
 import Technologies from './components/Technologies';
 import About from './components/About';
 import LiveDemo from './components/LiveDemo';
+import GetStarted from './components/GetStarted';
+import Footer from './components/Footer';
 
 function App() {
 
@@ -14,6 +16,8 @@ function App() {
       <About />
       <Technologies />
       <LiveDemo />
+      <GetStarted />
+      <Footer />
     </div>
   );
 }
