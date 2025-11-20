@@ -4,7 +4,6 @@ import Technologies from '../components/Technologies';
 import About from '../components/About';
 import LiveDemo from '../components/LiveDemo';
 import GetStarted from '../components/GetStarted';
-import Footer from '../components/Footer';
 
 export default function Home() {
     return (
@@ -14,7 +13,6 @@ export default function Home() {
             <Technologies />
             <LiveDemo />
             <GetStarted />
-            <Footer />
         </HomeContainer>
     )
 }

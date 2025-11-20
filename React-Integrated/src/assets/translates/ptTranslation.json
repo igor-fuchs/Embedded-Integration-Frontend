@@ -1,10 +1,6 @@
 {
-  "about": "Sobre",
-  "technologies": "Tecnologias",
-  "demo": "Demonstração",
-  "contact": "Contato",
-  "embedded": "Embutido",
-  "integration": "Integração",
-  "language.english": "English",
-  "language.portuguese": "Português"
+  "About": "Sobre",
+  "Technologies": "Tecnologias",
+  "Demo": "Demonstração",
+  "Contact": "Contato"
 }

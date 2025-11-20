@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import i18n from './util/translation';
 import Header from './components/Header';
 import Home from './pages/Home';
+import Footer from './components/Footer';
 import "./App.css";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
     <>
       <Header />
       <Home />
+      <Footer />
     </>
   );
 }

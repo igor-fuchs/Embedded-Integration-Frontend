@@ -5,7 +5,7 @@ import LinkedinIcon from "../assets/icons/linkedin-icon.svg?react";
 
 export default function GetStarted() {
     return (
-        <StyleGetStarted>
+        <StyleGetStarted id="Contact">
             <div className="get-started-container">
                 <div className="get-started-content">
                     <h2 className="section-title">Get Started</h2>

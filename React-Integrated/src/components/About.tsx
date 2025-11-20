@@ -5,7 +5,7 @@ import logo from '../assets/logo.svg';
 
 export default function About() {
     return (
-        <StyleAbout>
+        <StyleAbout id="About">
             <div className="about-container">
                 <div className="about-content">
                     <div className="about-header">

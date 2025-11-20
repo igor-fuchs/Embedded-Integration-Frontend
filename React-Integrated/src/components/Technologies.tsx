@@ -8,7 +8,7 @@ import PaintIcon from '../assets/icons/paint-icon.svg';
 
 export default function Technologies() {
     return (
-        <StyleTechnologies>
+        <StyleTechnologies id="Technologies">
             <div className="technologies-container">
                 <div className="technologies-content">
                     <div className="technologies-header">

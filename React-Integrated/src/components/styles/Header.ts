@@ -16,7 +16,7 @@ export const StyleHeader = styled.header`
     .header-nav {
         width: 100%;
         max-width: 1280px;
-        padding: 16px 24px;
+        padding: 16px 55px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -128,9 +128,9 @@ export const StyleHeader = styled.header`
         }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 880px) {
         .header-nav {
-            padding: 12px 16px;
+            padding: 12px 55px;
         }
 
         .header-content {
@@ -161,7 +161,11 @@ export const StyleHeader = styled.header`
         }
     }
 
-    @media (max-width: 620px) {
+    @media (max-width: 690px) {
+        .header-nav{
+            padding: 12px 16px;
+        }
+
         .nav-links {
             display: none;
         }

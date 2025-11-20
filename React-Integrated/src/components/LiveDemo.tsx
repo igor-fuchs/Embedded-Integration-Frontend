@@ -6,7 +6,7 @@ import InfoIcon from "../assets/icons/information-icon.svg";
 
 export default function LiveDemo() {
     return (
-        <StyleLiveDemo>
+        <StyleLiveDemo id="Demo">
             <div className="demo-container">
                 <div className="demo-content">
                     <div className="demo-header">
