@@ -59,9 +59,22 @@ export const StyleTechnologies = styled.section`
 
     .technologies-grid {
         width: 100%;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        overflow-x: hidden;
+        cursor: grab;
+        user-select: none;
+        position: relative;
+        
+        &:active {
+            cursor: grabbing;
+        }
+    }
+
+    .technologies-track {
+        display: flex;
         gap: 32px;
+        padding: 8px;
+        transition: transform 0.1s ease-out;
+        will-change: transform;
     }
 
     .tech-card {
@@ -72,6 +85,10 @@ export const StyleTechnologies = styled.section`
         border: 1px solid #334155;
         background: rgba(30, 41, 59, 0.5);
         transition: all 0.3s ease;
+        min-width: 320px;
+        max-width: 320px;
+        flex-shrink: 0;
+        pointer-events: none;
 
         &:hover {
             border-color: #475569;
@@ -146,7 +163,7 @@ export const StyleTechnologies = styled.section`
             padding: 80px 60px;
         }
 
-        .technologies-grid {
+        .technologies-track {
             gap: 24px;
         }
     }
@@ -167,9 +184,13 @@ export const StyleTechnologies = styled.section`
             line-height: 26px;
         }
 
-        .technologies-grid {
-            grid-template-columns: repeat(2, 1fr);
+        .technologies-track {
             gap: 24px;
+        }
+
+        .tech-card {
+            min-width: 280px;
+            max-width: 280px;
         }
     }
 
@@ -189,13 +210,14 @@ export const StyleTechnologies = styled.section`
             line-height: 24px;
         }
 
-        .technologies-grid {
-            grid-template-columns: 1fr;
+        .technologies-track {
             gap: 20px;
         }
 
         .tech-card {
             padding: 24px;
+            min-width: 260px;
+            max-width: 260px;
         }
 
         .tech-icon {
@@ -233,6 +255,8 @@ export const StyleTechnologies = styled.section`
 
         .tech-card {
             padding: 20px;
+            min-width: 240px;
+            max-width: 240px;
         }
     }
 
@@ -248,6 +272,11 @@ export const StyleTechnologies = styled.section`
         .technologies-description {
             font-size: 14px;
             line-height: 20px;
+        }
+
+        .tech-card {
+            min-width: 220px;
+            max-width: 220px;
         }
 
         .tech-icon {
