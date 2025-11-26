@@ -19,7 +19,9 @@ export const StyleTechnologies = styled.section`
 
     .technologies-content {
         width: 100%;
-        max-width: 1152px;
+        max-width: calc(
+            1152px + 160px
+        ); // 160px width from .technologies-grid::before and ::after
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -40,7 +42,7 @@ export const StyleTechnologies = styled.section`
         margin: 0;
         color: #60a5fa;
         text-align: center;
-        
+
         font-size: 48px;
         font-weight: 700;
         line-height: 48px;
@@ -50,7 +52,7 @@ export const StyleTechnologies = styled.section`
         margin: 0;
         color: #94a3b8;
         text-align: center;
-        
+
         font-size: 20px;
         font-weight: 400;
         line-height: 28px;
@@ -75,24 +77,29 @@ export const StyleTechnologies = styled.section`
 
         &::before {
             left: 0;
-            background: linear-gradient(to right, #020617 0%, rgba(2, 6, 23, 0.85) 40%, rgba(2, 6, 23, 0) 100%);
+            background: linear-gradient(
+                to right,
+                #020617 0%,
+                rgba(2, 6, 23, 0.85) 40%,
+                rgba(2, 6, 23, 0) 100%
+            );
         }
 
         &::after {
             right: 0;
-            background: linear-gradient(to left, #020617 0%, rgba(2, 6, 23, 0.85) 40%, rgba(2, 6, 23, 0) 100%);
+            background: linear-gradient(
+                to left,
+                #020617 0%,
+                rgba(2, 6, 23, 0.85) 40%,
+                rgba(2, 6, 23, 0) 100%
+            );
         }
     }
 
     .technologies-scroll {
         width: 100%;
         overflow-x: hidden;
-        cursor: grab;
         user-select: none;
-        
-        &:active {
-            cursor: grabbing;
-        }
     }
 
     .technologies-track {
@@ -117,12 +124,6 @@ export const StyleTechnologies = styled.section`
         max-width: 320px;
         flex-shrink: 0;
         pointer-events: none;
-
-        &:hover {
-            border-color: #475569;
-            background: rgba(30, 41, 59, 0.7);
-            transform: translateY(-4px);
-        }
     }
 
     .tech-icon {
@@ -171,7 +172,7 @@ export const StyleTechnologies = styled.section`
     .tech-title {
         margin: 0 0 12px 0;
         color: #fff;
-        
+
         font-size: 20px;
         font-weight: 600;
         line-height: normal;
@@ -180,15 +181,18 @@ export const StyleTechnologies = styled.section`
     .tech-description {
         margin: 0;
         color: #cbd5e1;
-        
+
         font-size: 16px;
         font-weight: 400;
         line-height: normal;
     }
 
     @media (max-width: 1200px) {
-        .technologies-content {
-            padding: 80px 60px;
+        .technologies-grid {
+            &::before,
+            &::after {
+                width: 200px;
+            }
         }
 
         .technologies-track {
@@ -199,7 +203,13 @@ export const StyleTechnologies = styled.section`
     @media (max-width: 1024px) {
         .technologies-content {
             gap: 48px;
-            padding: 64px 40px;
+        }
+
+        .technologies-grid {
+            &::before,
+            &::after {
+                width: 100px;
+            }
         }
 
         .technologies-title {
@@ -225,7 +235,6 @@ export const StyleTechnologies = styled.section`
     @media (max-width: 768px) {
         .technologies-content {
             gap: 40px;
-            padding: 48px 24px;
         }
 
         .technologies-title {
@@ -268,7 +277,13 @@ export const StyleTechnologies = styled.section`
     @media (max-width: 640px) {
         .technologies-content {
             gap: 32px;
-            padding: 40px 20px;
+        }
+
+        .technologies-grid {
+            &::before,
+            &::after {
+                width: 60px;
+            }
         }
 
         .technologies-title {
@@ -289,9 +304,6 @@ export const StyleTechnologies = styled.section`
     }
 
     @media (max-width: 480px) {
-        .technologies-content {
-            padding: 32px 16px;
-        }
         .technologies-title {
             font-size: 24px;
             line-height: 28px;

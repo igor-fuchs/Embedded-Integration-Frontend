@@ -20,7 +20,7 @@ export const listCards = [
         icon: Logo,
         title: "TIA Portal",
         description:
-            "Siemens engineering framework for PLC programming, HMI development, and industrial automation control.",
+            "Siemens engineering framework for PLC programming, and industrial automation control.",
     },
     {
         key: "react",
@@ -28,7 +28,7 @@ export const listCards = [
         icon: ReactIcon,
         title: "React",
         description:
-            "Modern JavaScript library for building responsive user interfaces and real-time data visualization dashboards.",
+            "Modern JavaScript/TypeScript framework for building responsive user interfaces and real-time data visualization dashboards.",
     },
     {
         key: "dotnet",
@@ -44,14 +44,14 @@ export const listCards = [
         icon: ConfigIcon,
         title: "Communication Protocols",
         description:
-            "OPC UA and HTTP enabling communication between industrial devices and services.",
+            "OPC UA and HTTP enabling communication between industrial devices and web services.",
     },
-    {
-        key: "pixel-art",
-        iconClass: "pixel-art",
-        icon: PaintIcon,
-        title: "Pixel Art",
-        description:
-            "Custom animated pixel art visualizations bringing factory operations to life in a unique artistic style.",
-    },
+    // {
+    //     key: "pixel-art",
+    //     iconClass: "pixel-art",
+    //     icon: PaintIcon,
+    //     title: "Pixel Art",
+    //     description:
+    //         "Custom animated pixel art visualizations bringing factory operations to life in a unique artistic style.",
+    // },
 ];
