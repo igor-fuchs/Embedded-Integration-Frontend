@@ -1,6 +1,7 @@
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleHeader } from "./styles/Header";
+import useScrollToSection from "../hooks/useScrollToSection";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 import Logo from "../assets/logo.svg";
 import MenuBarIcon from "../assets/icons/menu-bar-icon.svg";
@@ -20,31 +21,13 @@ export default function Header() {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
-    const scrollToSection = (sectionId: string) => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-            // Get header height to offset scroll position
-            const headerEl = document.querySelector('.header-nav') as HTMLElement;
-            const headerHeight = headerEl.offsetHeight;
-
-            // Get element top position relative to the document
-            const elementTop = element.getBoundingClientRect().top + window.pageYOffset;
-
-            // Calculate target position considering header height
-            const target = Math.max(elementTop - headerHeight, 0);
-
-            window.scrollTo({ top: target, behavior: 'smooth' });
-        }
-        setIsMobileMenuOpen(false);
-    };
-
     // Menu items configuration
-    const navMenuItems = useMemo<MenuItem[]>(() => [
-        { label: t("About"), onClick: () => scrollToSection('About') },
-        { label: t("Technologies"), onClick: () => scrollToSection('Technologies') },
-        { label: t("Demo"), onClick: () => scrollToSection('Demo') },
-        { label: t("Contact"), onClick: () => scrollToSection('Contact') }
-    ], [t]);
+    const navMenuItems: MenuItem[] = [
+        { label: t("About"), onClick: () => useScrollToSection('About', toggleMobileMenu) },
+        { label: t("Technologies"), onClick: () => useScrollToSection('Technologies', toggleMobileMenu) },
+        { label: t("Demo"), onClick: () => useScrollToSection('Demo', toggleMobileMenu) },
+        { label: t("Contact"), onClick: () => useScrollToSection('Contact', toggleMobileMenu) }
+    ];
 
 
 
@@ -64,7 +47,7 @@ export default function Header() {
 
                     {/* Version Mobile */}
                     <div className="mobile-menu-icon" ref={mobileMenuRef} onClick={toggleMobileMenu} >
-                        <img src={MenuBarIcon} alt="Menu" style={{filter: "invert(1)"}} className="menu-bar-icon" />
+                        <img src={MenuBarIcon} alt="Menu" style={{ filter: "invert(1)" }} className="menu-bar-icon" />
                         {isMobileMenuOpen && (
                             <div className="mobile-menu">
                                 <MenuAndLanguageSelector
@@ -80,7 +63,7 @@ export default function Header() {
                         menuItems={navMenuItems}
                         isMobile={false}
                     />
-                    
+
                 </div>
             </nav>
         </StyleHeader>

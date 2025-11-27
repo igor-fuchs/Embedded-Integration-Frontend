@@ -1,8 +1,10 @@
 import { StyleTechnologies } from "./styles/Technologies";
 import { listCards } from "./lib/TechnologiesLib";
 import { useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function Technologies() {
+    const { t } = useTranslation();
     const scrollRef = useRef<HTMLDivElement>(null);
     const cards = listCards.concat(listCards);
 
@@ -33,9 +35,9 @@ export default function Technologies() {
             <div className="technologies-container">
                 <div className="technologies-content">
                     <div className="technologies-header">
-                        <h2 className="technologies-title">Technologies</h2>
+                        <h2 className="technologies-title">{t('Technologies')}</h2>
                         <p className="technologies-description">
-                            Cutting-edge tools and platforms powering the integration
+                            {t('TechnologiesDescription')}
                         </p>
                     </div>
 
@@ -53,8 +55,8 @@ export default function Technologies() {
                                         <div className={`tech-icon ${card.iconClass}`}>
                                             <img src={card.icon} alt={card.title} />
                                         </div>
-                                        <h3 className="tech-title">{card.title}</h3>
-                                        <p className="tech-description">{card.description}</p>
+                                        <h3 className="tech-title">{t(card.key + '_title')}</h3>
+                                        <p className="tech-description">{t(card.key + '_description')}</p>
                                     </div>
                                 ))}
                             </div>

@@ -65,7 +65,6 @@ export const StyleMenuAndLanguageSelector = styled.div`
         filter: invert();
     }
 
-    /* Language Selector (replaces StyleLanguageSelector) */
     .language-selector {
         position: relative;
         display: flex;
@@ -112,7 +111,6 @@ export const StyleMenuAndLanguageSelector = styled.div`
         }
     }
 
-    /* Dropdown Menu (replaces StyleDropdownMenu) */
     .dropdown-menu {
         position: absolute;
         top: calc(100% + 12px);
@@ -127,7 +125,6 @@ export const StyleMenuAndLanguageSelector = styled.div`
         overflow: hidden;
     }
 
-    /* Dropdown Item (replaces StyleDropDownItem) */
     .dropdown-item {
         display: flex;
         align-items: center;
@@ -180,7 +177,6 @@ export const StyleMenuAndLanguageSelector = styled.div`
             display: none;
         }
 
-        /* Language selector mobile adjustments */
         .language-selector {
             justify-content: flex-start;
         }

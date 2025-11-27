@@ -4,8 +4,10 @@ import WebInterfaceIcon from "../assets/icons/web-interface-icon.svg";
 import logo from '../assets/logo.svg';
 import StatusIndicator from "./StatusIndicator";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function About() {
+    const { t } = useTranslation();
     const gridRef = useRef<HTMLDivElement>(null);
     const [isVisibleGrid, setIsVisibleGrid] = useState(false);
 
@@ -40,9 +42,9 @@ export default function About() {
             <div className="about-container">
                 <div className="about-content">
                     <div className="about-header">
-                        <h2 className="about-title">About the Project</h2>
+                        <h2 className="about-title">{t('AboutTheProject')}</h2>
                         <p className="about-description">
-                            Demonstrating seamless data flow between industrial automation systems and modern web interfaces
+                            {t('AboutDescription')}
                         </p>
                     </div>
 
@@ -54,9 +56,9 @@ export default function About() {
                                         <img src={IndustrialIcon} alt="Industrial Icon" />
                                     </div>
                                     <div className="feature-text">
-                                        <h3 className="feature-title">Industrial Integration</h3>
+                                        <h3 className="feature-title">{t('IndustrialIntegration')}</h3>
                                         <p className="feature-description">
-                                            Factory IO simulates real industrial processes, while TIA Portal provides PLC programming capabilities, creating an authentic automation environment.
+                                            {t('IndustrialIntegrationDescription')}
                                         </p>
                                     </div>
                                 </div>
@@ -68,9 +70,9 @@ export default function About() {
                                         <img src={WebInterfaceIcon} alt="Web Interface Icon" />
                                     </div>
                                     <div className="feature-text">
-                                        <h3 className="feature-title">Web Interface</h3>
+                                        <h3 className="feature-title">{t('WebInterface')}</h3>
                                         <p className="feature-description">
-                                            React-based dashboard provides real-time monitoring and control capabilities, bridging the gap between industrial systems and modern web technologies.
+                                            {t('WebInterfaceDescription')}
                                         </p>
                                     </div>
                                 </div>
@@ -96,15 +98,15 @@ export default function About() {
                                     <div className="status-indicators">
                                         <div className="status-item">
                                             <StatusIndicator id="Simulation" status={true} colorOn="#4ade80" colorOff="#f70000" />
-                                            <span className="status-text">Simulation</span>
+                                            <span className="status-text">{t('Simulation')}</span>
                                         </div>
                                         <div className="status-item">
                                             <StatusIndicator id="Processing" status={true} colorOn="#facc15" colorOff="#f70000" />
-                                            <span className="status-text">Processing</span>
+                                            <span className="status-text">{t('Processing')}</span>
                                         </div>
                                         <div className="status-item">
                                             <StatusIndicator id="Interface" status={true} colorOn="#60a5fa" colorOff="#f70000" />
-                                            <span className="status-text">Interface</span>
+                                            <span className="status-text">{t('Interface')}</span>
                                         </div>
                                     </div>
                                 </div>

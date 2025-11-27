@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-export const StyleGetStarted = styled.section`
+export const StyleContact = styled.section`
     width: 100%;
     background: #020617;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    .get-started-container {
+    .contact-container {
         width: 100%;
         max-width: 1280px;
         display: flex;
@@ -15,7 +15,7 @@ export const StyleGetStarted = styled.section`
         align-items: center;
     }
 
-    .get-started-content {
+    .contact-content {
         padding: 96px 80px;
         width: 100%;
         max-width: 896px;
@@ -198,7 +198,7 @@ export const StyleGetStarted = styled.section`
 
     @media (max-width: 768px) {
 
-        .get-started-content {
+        .contact-content {
             gap: 40px;
         }
 
@@ -238,7 +238,7 @@ export const StyleGetStarted = styled.section`
 
     @media (max-width: 640px) {
 
-        .get-started-content {
+        .contact-content {
             gap: 36px;
             padding: 64px 40px;
         }
@@ -273,7 +273,7 @@ export const StyleGetStarted = styled.section`
 
     @media (max-width: 480px) {
 
-        .get-started-content {
+        .contact-content {
             gap: 32px;
             padding: 40px 20px;
         }

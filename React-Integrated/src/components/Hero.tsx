@@ -3,8 +3,11 @@ import StatusIndicator from "./StatusIndicator";
 import PlayButtonIcon from '../assets/icons/play-button-icon.svg';
 import GithubIcon from '../assets/icons/github-icon.svg';
 import ArrowIcon from "../assets/icons/arrow-icon.svg";
+import { useTranslation } from "react-i18next";
+import useScrollToSection from "../hooks/useScrollToSection";
 
 export default function Hero() {
+    const { t } = useTranslation();
     return (
         <StyleHero>
             <div className="hero-background">
@@ -20,7 +23,7 @@ export default function Hero() {
             <div className="hero-content">
                 <div className="status-badge" >
                     <StatusIndicator id="System" status={true} colorOn="#4ade80" colorOff="#f70000" />
-                    <span className="status-text">System Online</span>
+                    <span className="status-text">{t('SystemOnline')}</span>
                 </div>
                 
                 <h1 className="hero-title">
@@ -29,21 +32,21 @@ export default function Hero() {
                 </h1>
                 
                 <p className="hero-subtitle">
-                    Bridging industrial automation and web technology through seamless integration of
-                    <span className="highlight"> Factory IO</span> ,
-                    <span className="highlight"> TIA Portal</span> , and
+                    {t('HeroSubtitle')}
+                    <span className="highlight"> Factory IO</span>,
+                    <span className="highlight"> TIA Portal</span>, {t('And')}
                     <span className="highlight"> React</span>
                 </p>
                 
                 <div className="cta-buttons">
-                    <button className="btn-primary">
+                    <button className="btn-primary" onClick={() => useScrollToSection("Demo")}>
                         <img src={PlayButtonIcon} alt="Play Button" />
-                        View Demo
+                        {t('ViewDemo')}
                     </button>
                     
-                    <button className="btn-secondary">
+                    <button className="btn-secondary" onClick={() => window.open("https://github.com/igor-fuchs", "_blank")}>
                         <img src={GithubIcon} alt="GitHub Icon" />
-                        View Code
+                        {t('ViewCode')}
                     </button>
                 </div>
                 
