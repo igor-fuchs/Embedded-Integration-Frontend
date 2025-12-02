@@ -4,13 +4,11 @@ import { useTranslation } from "react-i18next";
 import PlayButtonIcon from '../assets/icons/play-button-icon.svg';
 import FactoryBackground from '../assets/images/factory-background.svg';
 
-import RobotLeftBody from "../assets/images/robot-left-body.svg";
-import RobotLeftAxisX from "../assets/images/robot-left-axis-x.svg";
-import RobotLeftAxisY from "../assets/images/robot-left-axis-y.svg";
 import RobotRightBody from "../assets/images/robot-right-body.svg";
 import RobotRightAxisX from "../assets/images/robot-right-axis-x.svg";
 import RobotRightAxisY from "../assets/images/robot-right-axis-y.svg";
 import Conveyor from './Conveyor';
+import Robot from './Robot';
 
 // Adicionar um efeito de sombra no arco da esteira para dar profundidade 
 
@@ -127,10 +125,12 @@ export function PlayFactory() {
                                     />
 
                                     {/* Robot */}
-                                    
-                                    <img src={RobotLeftBody} alt="Robot Left Body" style={equipamentStyle({ width: 153, height: 125, zIndex: 99, left: 296, bottom: 209 })} />
-                                    <img src={RobotLeftAxisX} alt="Robot Left Axis X" style={equipamentStyle({ width: 153, height: 125, zIndex: 98, left: 296, bottom: 209 })} />
-                                    <img src={RobotLeftAxisY} alt="Robot Left Axis Y" style={equipamentStyle({ width: 153, height: 125, zIndex: 97, left: 296, bottom: 209 })} />
+                                    <Robot
+                                        id={"robot-left"}
+                                        bodyStyle={equipamentStyle({ width: 153, height: 125, zIndex: 99, left: 296, bottom: 209 })}
+                                        axisXStyle={equipamentStyle({ width: 153, height: 125, zIndex: 98, left: 296, bottom: 209 })}
+                                        axisYStyle={equipamentStyle({ width: 153, height: 125, zIndex: 97, left: 296, bottom: 209 })}
+                                    />
                                 </section>
 
 
