@@ -18,7 +18,7 @@ export const StyleLiveDemo = styled.section`
     .demo-content {
         padding: 64px 40px;
         width: 100%;
-        max-width: 1152px;
+        max-width: 1092px;
         display: flex;
         flex-direction: column;
         justify-content: center;

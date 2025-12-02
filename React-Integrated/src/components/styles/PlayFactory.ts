@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StylePlayFactory = styled.div`
+export const StylePlayFactory = styled.div<{ height: number }>`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,8 +8,8 @@ export const StylePlayFactory = styled.div`
     border-radius: 16px;
     background: #1e293b;
     overflow: hidden;
-    width: 1080px;
-    height: 620px;
+    width: 100%;
+    height: ${(props) => props.height}px;
 
     .window-controls {
         position: absolute;
@@ -48,6 +48,18 @@ export const StylePlayFactory = styled.div`
         flex-direction: column;
         align-items: center;
         gap: 24px;
+        z-index: 1;
+    }
+
+    .factory-background {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        z-index: 0;
     }
 
     .play-button {
@@ -88,7 +100,7 @@ export const StylePlayFactory = styled.div`
         margin: 0;
         color: #fff;
         text-align: center;
-        
+
         font-size: 24px;
         font-weight: 600;
         line-height: 32px;
@@ -99,7 +111,7 @@ export const StylePlayFactory = styled.div`
         max-width: 448px;
         color: #cbd5e1;
         text-align: center;
-        
+
         font-size: 16px;
         font-weight: 400;
         line-height: 24px;
@@ -117,7 +129,7 @@ export const StylePlayFactory = styled.div`
         background: linear-gradient(90deg, #2563eb 0%, #0891b2 100%);
         color: #fff;
         text-align: center;
-        
+
         font-size: 16px;
         font-weight: 600;
         line-height: normal;
