@@ -1,14 +1,11 @@
 import { StylePlayFactory } from './styles/PlayFactory';
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from "react-i18next";
-import PlayButtonIcon from '../assets/icons/play-button-icon.svg';
-import FactoryBackground from '../assets/images/factory-background.svg';
-
-import RobotRightBody from "../assets/images/robot-right-body.svg";
-import RobotRightAxisX from "../assets/images/robot-right-axis-x.svg";
-import RobotRightAxisY from "../assets/images/robot-right-axis-y.svg";
+import BigConveyor from './BigConveyor';
 import Conveyor from './Conveyor';
 import Robot from './Robot';
+import PlayButtonIcon from '../assets/icons/play-button-icon.svg';
+import FactoryBackground from '../assets/images/factory-background.svg';
 
 // Adicionar um efeito de sombra no arco da esteira para dar profundidade 
 
@@ -35,7 +32,6 @@ export function PlayFactory() {
     const equipamentStyle = (params: {
         width: number;
         height?: number;
-        zIndex?: number;
         top?: number;
         left?: number;
         bottom?: number;
@@ -46,7 +42,6 @@ export function PlayFactory() {
         userSelect: 'none',
         width: scale(params.width),
         ...(params.height !== undefined && { height: scale(params.height) }),
-        ...(params.zIndex !== undefined && { zIndex: params.zIndex }),
         ...(params.top !== undefined && { top: scale(params.top) }),
         ...(params.left !== undefined && { left: scale(params.left) }),
         ...(params.bottom !== undefined && { bottom: scale(params.bottom) }),
@@ -121,7 +116,7 @@ export function PlayFactory() {
                                         running={false}
                                         bodyIndex={89}
                                         bodyStyle={equipamentStyle({ width: 68, height: 253, left: 404, bottom: 19 })}
-                                        beltStyle={equipamentStyle({ width: 68, bottom: 31, zIndex: 88, left: 0 })}
+                                        beltStyle={equipamentStyle({ width: 68, bottom: 31, left: 0 })}
                                     />
 
                                     {/* Robot */}
@@ -129,21 +124,40 @@ export function PlayFactory() {
                                         id={"robot-left"}
                                         bodyIndex={99}
                                         bodyStyle={equipamentStyle({ width: 153, height: 125, left: 296, bottom: 209 })}
-                                        axisXStyle={equipamentStyle({ width: 153, height: 125, zIndex: 98, left: 0, bottom: 0 })}
-                                        axisYStyle={equipamentStyle({ width: 153, height: 125, zIndex: 97, left: 0, bottom: 0 })}
-                                        moveToHome={true}
+                                        axesStyle={equipamentStyle({ width: 153, height: 125, left: 0, bottom: 0 })}
+                                        moveToHome={false}
                                         moveToPick={false}
                                         moveToAntecipation={false}
                                         moveToDrop={false}
                                     />
                                 </section>
 
+                                <section className='right-side'>
+                                    <Conveyor
+                                        id={"conveyor-right"}
+                                        running={false}
+                                        bodyIndex={89}
+                                        bodyStyle={equipamentStyle({ width: 68, height: 253, right: 388, bottom: 19 })}
+                                        beltStyle={equipamentStyle({ width: 68, bottom: 31, right: 0 })}
+                                    />
 
-                                {/* Right Side */}
-                                {/* <img src={Conveyor4mBody} alt="Conveyor 4m Body (Right)" style={equipamentStyle({ width: 63, height: 253, right: 388, bottom: 19 })} /> */}
-                                <img src={RobotRightBody} alt="Robot Right Body" style={equipamentStyle({ width: 153, height: 125, zIndex: 99, right: 275, bottom: 209 })} />
-                                <img src={RobotRightAxisX} alt="Robot Right Axis X" style={equipamentStyle({ width: 153, height: 125, zIndex: 98, right: 275, bottom: 209 })} />
-                                <img src={RobotRightAxisY} alt="Robot Right Axis Y" style={equipamentStyle({ width: 153, height: 125, zIndex: 97, right: 275, bottom: 209 })} />
+                                    {/* Robot */}
+                                    <Robot
+                                        id={"robot-right"}
+                                        bodyIndex={99}
+                                        bodyStyle={equipamentStyle({ width: 153, height: 125,  right: 275, bottom: 209 })}
+                                        axesStyle={equipamentStyle({ width: 153, height: 125, right: 0, bottom: 0 })}
+                                        moveToHome={false}
+                                        moveToPick={false}
+                                        moveToAntecipation={false}
+                                        moveToDrop={false}
+                                    />
+                                </section>
+
+                                <section className='Center'>
+                                    <BigConveyor  />
+                                </section>
+                                
                             </div>
                         </>
                     )

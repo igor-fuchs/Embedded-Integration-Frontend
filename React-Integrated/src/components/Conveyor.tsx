@@ -4,13 +4,14 @@ import Conveyor4mBelt from '../assets/images/conveyor-4m-belt.svg?react';
 
 interface ConveyorProps {
     id: string;
-    bodyIndex: number;
     running: boolean;
+    bodyIndex: number;
     bodyStyle: React.CSSProperties;
     beltStyle: React.CSSProperties;
 }
 
 export default function Conveyor({ id, running, bodyIndex, bodyStyle, beltStyle }: ConveyorProps) {
+    const beltIndex = bodyIndex - 1;
 
     return (
         <StyleConveyor
@@ -25,7 +26,7 @@ export default function Conveyor({ id, running, bodyIndex, bodyStyle, beltStyle 
             {/* Belt Animated */}
             <div
                 className={running ? 'belt run' : 'belt'}
-                style={beltStyle}
+                style={{...beltStyle, zIndex: beltIndex }}
             >
                 <Conveyor4mBelt style={{ width: '100%', height: '100%', display: 'block' }} />
                 <Conveyor4mBelt style={{ width: '100%', height: '100%', display: 'block' }} />

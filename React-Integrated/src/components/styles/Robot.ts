@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 interface RobotProps {
-    xOffset: number;
-    yOffset: number;
+    $xOffset: number;
+    $yOffset: number;
 }
 
 export const StyleRobot = styled.div<RobotProps>`
@@ -13,13 +13,13 @@ export const StyleRobot = styled.div<RobotProps>`
         display: block;
     }
 
-    .axis-x {
-        transform: translateX(${props => props.xOffset}px);
+    .axes {
+        transform: translateX(${props => props.$xOffset}px);
         transition: transform 400ms ease;
     }
 
     .axis-y {
-        transform: translateY(${props => props.yOffset}px);
+        transform: translateY(${props => props.$yOffset}px);
         transition: transform 400ms ease;
     }   
 `;
