@@ -9,17 +9,16 @@ import RobotLeftAxisY from "../assets/images/robot-left-axis-y.svg?react";
 
 interface RobotProps {
     id: string;
+    ref: React.RefObject<HTMLDivElement | null>;
     bodyIndex: number;
     bodyStyle: React.CSSProperties;
-    
-    // Animation control
     moveToHome: boolean;
     moveToPick: boolean;
     moveToAntecipation: boolean;
     moveToDrop: boolean;
 }
 
-export default function Robot({ id, bodyIndex, bodyStyle, moveToHome, moveToPick, moveToAntecipation, moveToDrop }: RobotProps) {
+export default function Robot({ id, ref, bodyIndex, bodyStyle, moveToHome, moveToPick, moveToAntecipation, moveToDrop }: RobotProps) {
     const axesIndex = bodyIndex - 1;
     const axisXIndex = bodyIndex - 2;
     const axisYIndex = bodyIndex - 3;
@@ -78,7 +77,7 @@ export default function Robot({ id, bodyIndex, bodyStyle, moveToHome, moveToPick
     }, [moveToHome, moveToPick, moveToAntecipation, moveToDrop]);
 
     return (
-        <StyleRobot id={id} style={bodyStyle} $xOffset={xOffset} $yOffset={yOffset}>
+        <StyleRobot id={id} ref={ref} style={bodyStyle} $xOffset={xOffset} $yOffset={yOffset}>
             <RobotBody className="body" style={{ zIndex: bodyIndex }} />
 
             {/* Axes Animated - Axis Y is coupled in the Axis X */}

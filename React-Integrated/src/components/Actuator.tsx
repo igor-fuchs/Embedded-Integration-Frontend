@@ -6,6 +6,7 @@ import ActuatorPiston from "../assets/images/actuator-piston.svg?react";
 
 interface ActuatorProps {
     id: string;
+    ref: React.RefObject<HTMLDivElement | null>;
     bodyIndex: number;
     bodyStyle: React.CSSProperties;
     axisStyle: React.CSSProperties;
@@ -13,7 +14,7 @@ interface ActuatorProps {
     retract: boolean;
 }
 
-export default function Actuator({ id, bodyIndex, bodyStyle, axisStyle, advance, retract }: ActuatorProps) {
+export default function Actuator({ id, ref, bodyIndex, bodyStyle, axisStyle, advance, retract }: ActuatorProps) {
     const axisIndex = bodyIndex - 1;
     const rodIndex = bodyIndex - 2;
     const pistonIndex = bodyIndex - 2;
@@ -41,7 +42,7 @@ export default function Actuator({ id, bodyIndex, bodyStyle, axisStyle, advance,
     }, [advance, retract]);
 
     return (
-        <StyleActuator id={id} style={bodyStyle} $xOffset={xOffset}>
+        <StyleActuator id={id} ref={ref} style={bodyStyle} $xOffset={xOffset} >
             <ActuatorBody className="body" style={{ zIndex: bodyIndex }} />
 
             {/* Axis Animated */}

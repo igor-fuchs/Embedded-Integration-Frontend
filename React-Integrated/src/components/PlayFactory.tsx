@@ -7,6 +7,7 @@ import Robot from './Robot';
 import Actuator from './Actuator';
 import PlayButtonIcon from '../assets/icons/play-button-icon.svg';
 import FactoryBackground from '../assets/images/factory-background.svg';
+import Part from './Part';
 
 // Adicionar um efeito de sombra no arco da esteira para dar profundidade 
 
@@ -15,9 +16,20 @@ const BASE_HEIGHT = 590;
 
 export function PlayFactory() {
     const { t } = useTranslation();
+    const [conveyorLeftRunning, setConveyorLeftRunning] = useState<boolean>(false);
     const [simulationStart, setSimulationStart] = useState<boolean>(false);
     const [screenHeight, setScreenHeight] = useState<number>(BASE_HEIGHT);
     const screenRef = useRef<HTMLDivElement>(null);
+
+    // Equipment refs
+    const conveyorLeftRef = useRef<HTMLDivElement>(null);
+    const conveyorRightRef = useRef<HTMLDivElement>(null);
+    const robotLeftRef = useRef<HTMLDivElement>(null);
+    const robotRightRef = useRef<HTMLDivElement>(null);
+    const bigConveyorRef = useRef<HTMLDivElement>(null);
+    const actuatorCRef = useRef<HTMLDivElement>(null);
+    const actuatorBRef = useRef<HTMLDivElement>(null);
+    const actuatorARef = useRef<HTMLDivElement>(null);
 
     // Function to calculate the scale coefficient
     const getScaleCoefficient = () => {
@@ -64,6 +76,17 @@ export function PlayFactory() {
         window.addEventListener('resize', updateDimensions);
         return () => window.removeEventListener('resize', updateDimensions);
     }, []);
+
+    // Toggle conveyor left running every 2 seconds when simulation is running
+    useEffect(() => {
+        if (!simulationStart) return;
+
+        const interval = setInterval(() => {
+            setConveyorLeftRunning(prev => !prev);
+        }, 2000);
+
+        return () => clearInterval(interval);
+    }, [simulationStart]);
 
     return (
         <StylePlayFactory height={screenHeight} ref={screenRef}>
@@ -113,14 +136,15 @@ export function PlayFactory() {
                                 <section className='left-side'>
                                     <Conveyor
                                         id={"conveyor-left"}
+                                        ref={conveyorLeftRef}
                                         bodyIndex={89}
                                         bodyStyle={equipamentStyle({ width: 68, height: 253, left: 404, bottom: 19 })}
                                         beltStyle={equipamentStyle({ width: 68, bottom: 31, left: 0 })}
-                                        running={false}
+                                        running={conveyorLeftRunning}
                                     />
-
                                     <Robot
                                         id={"robot-left"}
+                                        ref={robotLeftRef}
                                         bodyIndex={99}
                                         bodyStyle={equipamentStyle({ width: 153, height: 125, left: 296, bottom: 209 })}
                                         moveToHome={false}
@@ -133,14 +157,15 @@ export function PlayFactory() {
                                 <section className='right-side'>
                                     <Conveyor
                                         id={"conveyor-right"}
+                                        ref={conveyorRightRef}
                                         bodyIndex={89}
                                         bodyStyle={equipamentStyle({ width: 68, height: 253, right: 388, bottom: 19 })}
                                         beltStyle={equipamentStyle({ width: 68, bottom: 31, right: 0 })}
                                         running={false}
                                     />
-
                                     <Robot
                                         id={"robot-right"}
+                                        ref={robotRightRef}
                                         bodyIndex={99}
                                         bodyStyle={equipamentStyle({ width: 153, height: 125,  right: 275, bottom: 209 })}
                                         moveToHome={true}
@@ -152,15 +177,16 @@ export function PlayFactory() {
 
                                 <section className='center'>
                                     <BigConveyor  
-                                        id={"big-conveyor-center"}
+                                        id={"big-conveyor"}
+                                        ref={bigConveyorRef}
                                         bodyIndex={89}
                                         bodyStyle={equipamentStyle({ width: 186, height: 369, top: 36, right: 354 })}
                                         beltStyle={equipamentStyle({ width: 56, bottom: 31, left: 0 })}
                                         running={false}
                                     />
-
                                     <Actuator
                                         id={"actuator-c"}
+                                        ref={actuatorCRef}
                                         bodyIndex={99}
                                         bodyStyle={equipamentStyle({ width: 144, height: 44, top: 63, left: 412 })}
                                         axisStyle={equipamentStyle({ width: 144, height: 44, top: 0, left: -56 })}
@@ -169,6 +195,7 @@ export function PlayFactory() {
                                     />
                                     <Actuator
                                         id={"actuator-b"}
+                                        ref={actuatorBRef}
                                         bodyIndex={99}
                                         bodyStyle={equipamentStyle({ width: 144, height: 44, top: 135, left: 412 })}
                                         axisStyle={equipamentStyle({ width: 144, height: 44, top: 0, left: -56 })}
@@ -177,6 +204,7 @@ export function PlayFactory() {
                                     />
                                     <Actuator
                                         id={"actuator-a"}
+                                        ref={actuatorARef}
                                         bodyIndex={99}
                                         bodyStyle={equipamentStyle({ width: 144, height: 44, top: 206, left: 412 })}
                                         axisStyle={equipamentStyle({ width: 144, height: 44, bottom: 0, left: -56 })}
@@ -184,7 +212,20 @@ export function PlayFactory() {
                                         retract={false}
                                     />
                                 </section>
-                                
+
+                                <section className='Parts'>
+                                    <Part 
+                                        bodyIndex={100}
+                                        bodyStyle={equipamentStyle({ width: 20, height: 20, left: 430, bottom: 36 })}
+                                        conveyorRef={conveyorLeftRef}
+                                        conveyorRunning={conveyorLeftRunning}
+                                        robotRef={robotLeftRef}
+                                        bigConveyorRef={bigConveyorRef}
+                                        actuatorARef={actuatorARef}
+                                        actuatorBRef={actuatorBRef}
+                                        actuatorCRef={actuatorCRef}
+                                    />
+                                </section>
                             </div>
                         </>
                     )
