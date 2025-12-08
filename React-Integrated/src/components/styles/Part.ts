@@ -6,12 +6,16 @@ interface PartProps {
 }
 
 export const StylePart = styled.div<PartProps>`
+    transform: translate(
+        ${(props) => props.$xOffset}px,
+        ${(props) => props.$yOffset}px
+    );
+
     .part {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
-        transform: translate(
-            ${(props) => props.$xOffset}px,
-            ${(props) => props.$yOffset}px
-        );
     }
 `;

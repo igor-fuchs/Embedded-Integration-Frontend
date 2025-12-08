@@ -24,6 +24,7 @@ export default function Part({ bodyIndex, bodyStyle, conveyorRunning, conveyorRe
     const xOffset = 0;
     const animationRef = useRef<number | null>(null);
     const lastTimeRef = useRef<number>(0);
+    const partRef = useRef<HTMLDivElement>(null);
 
     // Calcula a velocidade baseada na altura da esteira
     const getConveyorSpeed = () => {
@@ -33,6 +34,29 @@ export default function Part({ bodyIndex, bodyStyle, conveyorRunning, conveyorRe
         const totalMovement = conveyorHeight * 0.5; // 50% da altura
         // Velocidade em pixels por milissegundo
         return totalMovement / CONVEYOR_ANIMATION_DURATION;
+    };
+
+    // Verifica se a peça está tocando a esteira
+    const isTouchingConveyor = (): boolean => {
+        if (!partRef.current || !conveyorRef.current) return false;
+
+        const partRect = partRef.current.getBoundingClientRect();
+        // Usa o elemento pai (StyleConveyor) para verificar a colisão
+        const conveyorElement = conveyorRef.current.parentElement;
+        if (!conveyorElement) return false;
+        
+        const conveyorRect = conveyorElement.getBoundingClientRect();
+
+        // Verifica sobreposição horizontal e vertical
+        const horizontalOverlap = 
+            partRect.left < conveyorRect.right && 
+            partRect.right > conveyorRect.left;
+        
+        const verticalOverlap = 
+            partRect.top < conveyorRect.bottom && 
+            partRect.bottom > conveyorRect.top;
+
+        return horizontalOverlap && verticalOverlap;
     };
 
     useEffect(() => {
@@ -53,9 +77,13 @@ export default function Part({ bodyIndex, bodyStyle, conveyorRunning, conveyorRe
             const deltaTime = currentTime - lastTimeRef.current;
 
             if (deltaTime >= FRAME_INTERVAL) {
-                const speed = getConveyorSpeed();
-                // Move para cima (negativo no Y) sincronizado com a esteira
-                setYOffset(prev => prev - speed * deltaTime);
+                // Só move se estiver tocando a esteira
+
+                if (isTouchingConveyor()) {
+                    const speed = getConveyorSpeed();
+                    // Move para cima (negativo no Y) sincronizado com a esteira
+                    setYOffset(prev => prev - speed * deltaTime);
+                }
                 lastTimeRef.current = currentTime;
             }
 
@@ -74,8 +102,8 @@ export default function Part({ bodyIndex, bodyStyle, conveyorRunning, conveyorRe
     }, [conveyorRunning, conveyorRef]);
 
     return (
-        <StylePart style={bodyStyle} $xOffset={xOffset} $yOffset={yOffset}>
-            <GreenPart className='part' style={{ zIndex: bodyIndex, position: 'absolute', left: 0 }} />
+        <StylePart ref={partRef} style={{...bodyStyle, zIndex: bodyIndex}} $xOffset={xOffset} $yOffset={yOffset}>
+            <GreenPart className='part' />
         </StylePart>
     );
 }
