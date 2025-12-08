@@ -1,11 +1,13 @@
+import { useEffect } from 'react';
 import { StyleConveyor } from './styles/Conveyor';
 import Conveyor4mBody from '../assets/images/conveyor-4m-body.svg?react';
 import Conveyor4mBelt from '../assets/images/conveyor-4m-belt.svg?react';
-import { useEffect } from 'react';
+import type { ConveyorHtmlElement } from './lib/ConveyorLib';
+
 
 interface ConveyorProps {
     id: string;
-    ref: React.RefObject<HTMLDivElement | null>;
+    ref: React.RefObject<ConveyorHtmlElement | null>;
     bodyIndex: number;
     bodyStyle: React.CSSProperties;
     beltStyle: React.CSSProperties;
@@ -13,25 +15,28 @@ interface ConveyorProps {
 }
 
 export default function Conveyor({ id, ref, bodyIndex, bodyStyle, beltStyle, running }: ConveyorProps) {
-    // Initializing values for data attributes
-    const CONVEYOR_ANIMATION_DURATION_MS = 5000;
-    const CONVEYOR_ANIMATION_DISTANCE_PERCENT = 50;
+    const beltIndex = bodyIndex - 1;
+    const animationDurationMs = 5000;
 
     useEffect(() => {
         if (!ref.current) return;
-        ref.current.dataset.animationDurationMs = CONVEYOR_ANIMATION_DURATION_MS.toString();
-        ref.current.dataset.animationDistancePercent = CONVEYOR_ANIMATION_DISTANCE_PERCENT.toString();
+
+        // The animation of the conveyor moves 50% of its height in 5 seconds
+        const conveyorHeight = ref.current.offsetHeight;
+        const totalMovement = conveyorHeight * 0.5; // 50% of the height
+
+        // Speed in pixels per millisecond
+        ref.current.dataset.speedMs = (totalMovement / animationDurationMs).toString();
     }, []);
+
 
     useEffect(() => {
         if (!ref.current) return;
         ref.current.style.animationPlayState = running ? 'running' : 'paused';
     }, [running]);
 
-    const beltIndex = bodyIndex - 1;
-
     return (
-        <StyleConveyor id={id} style={bodyStyle} $running={running}  >
+        <StyleConveyor id={id} style={bodyStyle} $animationDurationMs={animationDurationMs} >
             <Conveyor4mBody
                 className='body'
                 style={{ zIndex: bodyIndex }}

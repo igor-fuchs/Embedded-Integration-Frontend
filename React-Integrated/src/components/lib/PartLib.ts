@@ -1,48 +1,21 @@
-import { useEffect, type RefObject } from 'react';
+// Check if the part is touching the object
+export const isTouching = (partRef: React.RefObject<HTMLDivElement | null>, objectRef: React.RefObject<HTMLDivElement | null>): boolean => {
+    if (!partRef.current || !objectRef.current) return false;
 
-export const useYMonitor = (
-    ref: RefObject<HTMLElement | null>,
-    isActive: boolean,
-    setValueOfMovement: React.Dispatch<React.SetStateAction<number>>,
-    valueOfMovement: number
-) => {
-    useEffect(() => {
-        if (!ref.current || !isActive) return;
-        
-        let animationId: number;
-        let lastYPosition = ref.current.getBoundingClientRect().y;
-        const refHeight = ref.current.getBoundingClientRect().height;
-        let isRunning = true; // Flag para controlar se deve continuar
-        
-        const yMonitor = () => {
-            if (!ref.current || !isRunning) return; // Verifica a flag
-            
-            const currentYPosition = ref.current.getBoundingClientRect().y;
-            
-            if (currentYPosition !== lastYPosition) {
-                const checkingMovement = lastYPosition - currentYPosition;
-                
-                setValueOfMovement(prev => {
-                    if (checkingMovement > 0) {
-                        return prev - checkingMovement;
-                    } else {
-                        return prev - (checkingMovement + refHeight / 2);
-                    }
-                });
-                
-                lastYPosition = currentYPosition;
-            }
-            
-            if (isRunning) { // Só agenda novo frame se ainda estiver rodando
-                animationId = requestAnimationFrame(yMonitor);
-            }
-        };
-        
-        animationId = requestAnimationFrame(yMonitor);
-        
-        return () => {
-            isRunning = false; // Para imediatamente
-            cancelAnimationFrame(animationId);
-        };
-    }, [isActive, ref, setValueOfMovement]);
+    const partRect = partRef.current.getBoundingClientRect();
+    const conveyorElement = objectRef.current.parentElement;
+    if (!conveyorElement) return false;
+
+    const conveyorRect = conveyorElement.getBoundingClientRect();
+
+    // Verifica sobreposição horizontal e vertical
+    const horizontalOverlap =
+        partRect.left < conveyorRect.right &&
+        partRect.right > conveyorRect.left;
+
+    const verticalOverlap =
+        partRect.top < conveyorRect.bottom &&
+        partRect.bottom > conveyorRect.top;
+
+    return horizontalOverlap && verticalOverlap;
 };

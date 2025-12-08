@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface ConveyorProps {
-    $running: boolean;
+    $animationDurationMs: number;
 }
 
 export const StyleConveyor = styled.div<ConveyorProps>`
@@ -18,7 +18,7 @@ export const StyleConveyor = styled.div<ConveyorProps>`
         position: absolute;
         display: flex;
         flex-direction: column;
-        animation: conveyorMove 5s linear infinite;
+        animation: conveyorMove ${props => props.$animationDurationMs}ms linear infinite;
     }
 
     @keyframes conveyorMove {

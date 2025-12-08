@@ -8,6 +8,7 @@ import Actuator from './Actuator';
 import PlayButtonIcon from '../assets/icons/play-button-icon.svg';
 import FactoryBackground from '../assets/images/factory-background.svg';
 import Part from './Part';
+import type { ConveyorHtmlElement } from './lib/ConveyorLib';
 
 // Adicionar um efeito de sombra no arco da esteira para dar profundidade 
 
@@ -15,15 +16,29 @@ const BASE_WIDTH = 1024;
 const BASE_HEIGHT = 590;
 
 export function PlayFactory() {
-    const { t } = useTranslation();
+    // Test variables after delete
     const [conveyorLeftRunning, setConveyorLeftRunning] = useState<boolean>(false);
+    const [robotLeftMoving, setRobotLeftMoving] = useState<{
+        toHome: boolean;
+        toPick: boolean;
+        toAntecipation: boolean;
+        toDrop: boolean;
+    }>({
+        toHome: false,
+        toPick: false,
+        toAntecipation: false,
+        toDrop: false,
+    });
+
+
+    const { t } = useTranslation();
     const [simulationStart, setSimulationStart] = useState<boolean>(false);
     const [screenHeight, setScreenHeight] = useState<number>(BASE_HEIGHT);
     const screenRef = useRef<HTMLDivElement>(null);
 
     // Equipment refs
-    const conveyorLeftRef = useRef<HTMLDivElement>(null);
-    const conveyorRightRef = useRef<HTMLDivElement>(null);
+    const conveyorLeftRef = useRef<ConveyorHtmlElement>(null);
+    const conveyorRightRef = useRef<ConveyorHtmlElement>(null);
     const robotLeftRef = useRef<HTMLDivElement>(null);
     const robotRightRef = useRef<HTMLDivElement>(null);
     const bigConveyorRef = useRef<HTMLDivElement>(null);
@@ -77,17 +92,6 @@ export function PlayFactory() {
         return () => window.removeEventListener('resize', updateDimensions);
     }, []);
 
-    // Toggle conveyor left running every 2 seconds when simulation is running
-    useEffect(() => {
-        if (!simulationStart) return;
-
-        const interval = setInterval(() => {
-            setConveyorLeftRunning(prev => !prev);
-        }, 2000);
-
-        return () => clearInterval(interval);
-    }, [simulationStart]);
-
     return (
         <StylePlayFactory height={screenHeight} ref={screenRef}>
             {/* Window Controls */}
@@ -95,6 +99,107 @@ export function PlayFactory() {
                 <div className="control-dot green"></div>
                 <div className="control-dot yellow"></div>
                 <div className="control-dot blue"></div>
+            </div>
+
+            {/* Test Buttons - Remove after validation */}
+            <div style={{
+                position: 'absolute',
+                top: '20px',
+                right: '20px',
+                zIndex: 9999,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '10px'
+            }}>
+                {/* Conveyor Left Running Button */}
+                <button
+                    onClick={() => setConveyorLeftRunning(!conveyorLeftRunning)}
+                    style={{
+                        padding: '10px 15px',
+                        backgroundColor: conveyorLeftRunning ? 'rgba(76, 175, 80, 0.7)' : 'rgba(200, 200, 200, 0.7)',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontSize: '12px',
+                        fontWeight: 'bold',
+                        backdropFilter: 'blur(4px)'
+                    }}
+                >
+                    Conveyor Left: {conveyorLeftRunning ? 'ON' : 'OFF'}
+                </button>
+
+                {/* Robot Left - toHome Button */}
+                <button
+                    onClick={() => setRobotLeftMoving({ ...robotLeftMoving, toHome: !robotLeftMoving.toHome })}
+                    style={{
+                        padding: '10px 15px',
+                        backgroundColor: robotLeftMoving.toHome ? 'rgba(33, 150, 243, 0.7)' : 'rgba(200, 200, 200, 0.7)',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontSize: '12px',
+                        fontWeight: 'bold',
+                        backdropFilter: 'blur(4px)'
+                    }}
+                >
+                    Robot toHome: {robotLeftMoving.toHome ? 'ON' : 'OFF'}
+                </button>
+
+                {/* Robot Left - toPick Button */}
+                <button
+                    onClick={() => setRobotLeftMoving({ ...robotLeftMoving, toPick: !robotLeftMoving.toPick })}
+                    style={{
+                        padding: '10px 15px',
+                        backgroundColor: robotLeftMoving.toPick ? 'rgba(255, 152, 0, 0.7)' : 'rgba(200, 200, 200, 0.7)',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontSize: '12px',
+                        fontWeight: 'bold',
+                        backdropFilter: 'blur(4px)'
+                    }}
+                >
+                    Robot toPick: {robotLeftMoving.toPick ? 'ON' : 'OFF'}
+                </button>
+
+                {/* Robot Left - toAntecipation Button */}
+                <button
+                    onClick={() => setRobotLeftMoving({ ...robotLeftMoving, toAntecipation: !robotLeftMoving.toAntecipation })}
+                    style={{
+                        padding: '10px 15px',
+                        backgroundColor: robotLeftMoving.toAntecipation ? 'rgba(156, 39, 176, 0.7)' : 'rgba(200, 200, 200, 0.7)',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontSize: '12px',
+                        fontWeight: 'bold',
+                        backdropFilter: 'blur(4px)'
+                    }}
+                >
+                    Robot toAntecipation: {robotLeftMoving.toAntecipation ? 'ON' : 'OFF'}
+                </button>
+
+                {/* Robot Left - toDrop Button */}
+                <button
+                    onClick={() => setRobotLeftMoving({ ...robotLeftMoving, toDrop: !robotLeftMoving.toDrop })}
+                    style={{
+                        padding: '10px 15px',
+                        backgroundColor: robotLeftMoving.toDrop ? 'rgba(244, 67, 54, 0.7)' : 'rgba(200, 200, 200, 0.7)',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontSize: '12px',
+                        fontWeight: 'bold',
+                        backdropFilter: 'blur(4px)'
+                    }}
+                >
+                    Robot toDrop: {robotLeftMoving.toDrop ? 'ON' : 'OFF'}
+                </button>
             </div>
 
             {
@@ -147,10 +252,10 @@ export function PlayFactory() {
                                         ref={robotLeftRef}
                                         bodyIndex={99}
                                         bodyStyle={equipamentStyle({ width: 153, height: 125, left: 296, bottom: 209 })}
-                                        moveToHome={false}
-                                        moveToPick={false}
-                                        moveToAntecipation={false}
-                                        moveToDrop={false}
+                                        moveToHome={robotLeftMoving.toHome}
+                                        moveToPick={robotLeftMoving.toPick}
+                                        moveToAntecipation={robotLeftMoving.toAntecipation}
+                                        moveToDrop={robotLeftMoving.toDrop}
                                     />
                                 </section>
 
@@ -220,6 +325,10 @@ export function PlayFactory() {
                                         conveyorRef={conveyorLeftRef}
                                         conveyorRunning={conveyorLeftRunning}
                                         robotRef={robotLeftRef}
+                                        moveToHome={robotLeftMoving.toHome}
+                                        moveToPick={robotLeftMoving.toPick}
+                                        moveToAntecipation={robotLeftMoving.toAntecipation}
+                                        moveToDrop={robotLeftMoving.toDrop}
                                         bigConveyorRef={bigConveyorRef}
                                         actuatorARef={actuatorARef}
                                         actuatorBRef={actuatorBRef}

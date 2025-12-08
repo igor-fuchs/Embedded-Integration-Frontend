@@ -5,11 +5,11 @@ interface PartProps {
     $yOffset: number;
 }
 
-export const StylePart = styled.div<PartProps>`
-    transform: translate(
-        ${(props) => props.$xOffset}px,
-        ${(props) => props.$yOffset}px
-    );
+export const StylePart = styled.div.attrs<PartProps>((props) => ({
+    style: {
+        transform: `translate(${props.$xOffset}px, ${props.$yOffset}px)`,
+    },
+}))`
 
     .part {
         position: absolute;
