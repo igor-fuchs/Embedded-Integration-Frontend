@@ -31,7 +31,7 @@ export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyo
     });
 
     // Track previous robot position for incremental movement
-    const previousRobotPosition = useRef({ x: 0, y: 0 });
+    const previousRobotPosition = useRef({ x: null, y: null } as { x: number | null; y: number | null });
     const [partTransition, setPartTransition] = useState<string>('');
 
     // Conveyor Animation Effect
@@ -78,10 +78,15 @@ export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyo
 
     // Robot Movement Effect - when part is grabbed by robot
     useEffect(() => {
-        if (!robot.isGrabbed || !robot.ref.current) return;
-        
+        if(!robot.isGrabbed) {
+            previousRobotPosition.current = { x: null, y: null };
+            partTransition ?? setPartTransition(''); // Avoid unexpected delays
+            return;
+        }
+        if (!robot.ref.current) return;
+
         // Helper to parse translateX(Npx) or translateY(Npx) from transform string
-        const parseTranslate = (transform: string | undefined): number => {
+        const parseTranslate = (transform: string): number => {
             if (!transform) return 0;
             const match = transform.match(/translate[XY]\(([+-]?[\d.]+)px\)/);
             return match ? parseFloat(match[1]) : 0;
@@ -91,9 +96,14 @@ export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyo
         const currentX = parseTranslate(robot.movement.x.transform as string);
         const currentY = parseTranslate(robot.movement.y.transform as string);
 
+        // Initialize previous position if not set
+        if(previousRobotPosition.current.x === null || previousRobotPosition.current.y === null) {
+            previousRobotPosition.current = { x: currentX, y: currentY };
+        }
+
         // Calculate incremental delta
-        const deltaX = currentX - previousRobotPosition.current.x;
-        const deltaY = currentY - previousRobotPosition.current.y;
+        const deltaX = currentX - (previousRobotPosition.current.x ?? currentX);
+        const deltaY = currentY - (previousRobotPosition.current.y ?? currentY);
 
         // Apply incremental offset if there's any movement
         if (deltaX !== 0 || deltaY !== 0) {
@@ -107,10 +117,10 @@ export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyo
 
             // Extract and combine transitions (use the one that's not default)
             const xTransition = robot.movement.x.transition as string;
-            const yTransition = robot.movement.y.transition as string;
+            const yTransition = robot.movement.y.transition as string; // Check if in the future we need to combine both
 
             // Apply transition (prefer the one with transform in it)
-            const transition = xTransition?.includes('transform') ? xTransition : yTransition;
+            const transition = xTransition;
             if (transition) {
                 setPartTransition(transition);
             }
