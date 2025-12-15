@@ -9,6 +9,7 @@ import PlayButtonIcon from '../assets/icons/play-button-icon.svg';
 import FactoryBackground from '../assets/images/factory-background.svg';
 import Part from './Part';
 import type { RobotMovement } from './Robot';
+import type { BigConveyorMovement } from './BigConveyor';
 
 // Adicionar um efeito de sombra no arco da esteira para dar profundidade 
 
@@ -56,6 +57,10 @@ export function PlayFactory() {
             transformPx: 0,
             transitionMs: 0
         }
+    });
+    const [bigConveyorMovement, setBigConveyorMovement] = useState<BigConveyorMovement>({
+        transformPx: 0,
+        transitionMs: 0
     });
 
     // Equipment refs
@@ -351,6 +356,8 @@ export function PlayFactory() {
                                         bodyStyle={equipamentStyle({ width: 186, height: 369, top: 36, right: 354 })}
                                         beltStyle={equipamentStyle({ width: 56, bottom: 31, left: 0 })}
                                         running={bigConveyorRunning}
+                                        beltMovement={bigConveyorMovement}
+                                        setBeltMovement={setBigConveyorMovement}
                                         scaleFactor={getScaleCoefficient()}
                                     />
                                     <Actuator
