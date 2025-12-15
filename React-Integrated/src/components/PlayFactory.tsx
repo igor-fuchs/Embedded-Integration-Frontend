@@ -38,10 +38,25 @@ export function PlayFactory() {
     const screenRef = useRef<HTMLDivElement>(null);
 
     // Equipament auxs
-    const [robotLeftMovement, setRobotLeftMovement] = useState<RobotMovement>({x: {}, y: {}});
-    const [robotRightMovement, setRobotRightMovement] = useState<RobotMovement>({x: {}, y: {}});
-
-
+    const [robotLeftMovement, setRobotLeftMovement] = useState<RobotMovement>({
+        x: {
+            transform: '',
+            transition: ''
+        }, y: {
+            transform: '',
+            transition: ''
+        }
+    });
+    const [robotRightMovement, setRobotRightMovement] = useState<RobotMovement>({
+        x: {
+            transform: '',
+            transition: ''
+        },
+        y: {
+            transform: '',
+            transition: ''
+        }
+    });
     // Equipment refs
     const conveyorLeftRef = useRef<HTMLDivElement>(null);
     const conveyorRightRef = useRef<HTMLDivElement>(null);
@@ -298,7 +313,7 @@ export function PlayFactory() {
                                         id={"robot-right"}
                                         ref={robotRightRef}
                                         bodyIndex={99}
-                                        bodyStyle={equipamentStyle({ width: 153, height: 125,  right: 275, bottom: 209 })}
+                                        bodyStyle={equipamentStyle({ width: 153, height: 125, right: 275, bottom: 209 })}
                                         moveToHome={true}
                                         moveToPick={false}
                                         moveToAntecipation={false}
@@ -310,7 +325,7 @@ export function PlayFactory() {
                                 </section>
 
                                 <section className='center'>
-                                    <BigConveyor  
+                                    <BigConveyor
                                         id={"big-conveyor"}
                                         ref={bigConveyorRef}
                                         bodyIndex={89}
@@ -348,7 +363,7 @@ export function PlayFactory() {
                                 </section>
 
                                 <section className='Parts'>
-                                    <Part 
+                                    <Part
                                         bodyIndex={100}
                                         bodyStyle={equipamentStyle({ width: 20, height: 20, left: 430, bottom: 36 })}
                                         conveyor={{
@@ -364,6 +379,7 @@ export function PlayFactory() {
                                         actuatorARef={actuatorARef}
                                         actuatorBRef={actuatorBRef}
                                         actuatorCRef={actuatorCRef}
+                                        scaleFactor={getScaleCoefficient()}
                                     />
                                 </section>
                             </div>

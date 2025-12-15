@@ -8,8 +8,14 @@ import RobotLeftAxisX from "../assets/images/robot-left-axis-x.svg?react";
 import RobotLeftAxisY from "../assets/images/robot-left-axis-y.svg?react";
 
 export interface RobotMovement {
-    x: React.CSSProperties;
-    y: React.CSSProperties;
+    x: {
+        transform: string;
+        transition: string;
+    };
+    y: {
+        transform: string;
+        transition: string;
+    };
 }
 
 interface RobotProps {
@@ -45,21 +51,35 @@ export default function Robot({ id, ref, bodyIndex, bodyStyle, moveToHome, moveT
 
         // NOTE: Movement maximum (39, 25) | Movement minimum (-10, -20) -> (X, Y)
         // Determine positions (x px, y px)
-        const homePosition = {x: 0, y: 0};
-        const pickPosition = {x: 0, y: 81};
-        const anticipationPosition = {x: 12.5, y: 12.5};
-        const dropPosition = {x: 39, y: 25};
+        const homePosition = { x: 0, y: 0 };
+        const pickPosition = { x: 0, y: 81 };
+        const anticipationPosition = { x: 12.5, y: 12.5 };
+        const dropPosition = { x: 39, y: 25 };
 
-        ref.current.dataset.homePosition = `${homePosition.x * scaleFactor},${homePosition.y * scaleFactor}`;
-        ref.current.dataset.pickPosition = `${pickPosition.x * scaleFactor},${pickPosition.y * scaleFactor}`;
-        ref.current.dataset.anticipationPosition = `${anticipationPosition.x * scaleFactor},${anticipationPosition.y * scaleFactor}`;
-        ref.current.dataset.dropPosition = `${dropPosition.x * scaleFactor},${dropPosition.y * scaleFactor}`;
+        ref.current.dataset.homePosition = `${homePosition.x},${homePosition.y}`;
+        ref.current.dataset.pickPosition = `${pickPosition.x},${pickPosition.y}`;
+        ref.current.dataset.anticipationPosition = `${anticipationPosition.x},${anticipationPosition.y}`;
+        ref.current.dataset.dropPosition = `${dropPosition.x},${dropPosition.y}`;
 
         // Determine movement times (x ms, y ms)
         ref.current.dataset.homeTimeMs = '400,400';
         ref.current.dataset.pickTimeMs = '400,400';
         ref.current.dataset.anticipationTimeMs = '400,400';
         ref.current.dataset.dropTimeMs = '400,400';
+
+        // Resizing the position, ensure that the robot stays at the correct position when scaleFactor changes
+        if (robotMovement.x.transform && robotMovement.y.transform) {
+            setRobotMovement(prev => ({
+                x: {
+                    ...prev.x,
+                    transform: `translateX(${xOffset.current * scaleFactor}px)`,
+                },
+                y: {
+                    ...prev.y,
+                    transform: `translateY(${yOffset.current * scaleFactor}px)`,
+                }
+            }));
+        }
     }, [scaleFactor]);
 
     useEffect(() => {
@@ -112,11 +132,11 @@ export default function Robot({ id, ref, bodyIndex, bodyStyle, moveToHome, moveT
 
         setRobotMovement({
             x: {
-                transform: `translateX(${xOffset.current}px)`,
+                transform: `translateX(${xOffset.current * scaleFactor}px)`,
                 transition: `transform ${timeX}ms ease`,
             },
             y: {
-                transform: `translateY(${yOffset.current}px)`,
+                transform: `translateY(${yOffset.current * scaleFactor}px)`,
                 transition: `transform ${timeY}ms ease`,
             }
         });

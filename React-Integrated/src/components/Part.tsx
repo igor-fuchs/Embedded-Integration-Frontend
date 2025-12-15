@@ -19,9 +19,10 @@ interface PartProps {
     actuatorARef: React.RefObject<HTMLDivElement | null>;
     actuatorBRef: React.RefObject<HTMLDivElement | null>;
     actuatorCRef: React.RefObject<HTMLDivElement | null>;
+    scaleFactor: number;
 }
 
-export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyorRef, actuatorARef, actuatorBRef, actuatorCRef }: PartProps) {
+export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyorRef, actuatorARef, actuatorBRef, actuatorCRef, scaleFactor }: PartProps) {
     const animationID = useRef<number | null>(null);
     const frameTime = useRef<number>(0);
     const partRef = useRef<HTMLDivElement>(null);
@@ -80,7 +81,7 @@ export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyo
     useEffect(() => {
         if(!robot.isGrabbed) {
             previousRobotPosition.current = { x: null, y: null };
-            partTransition ?? setPartTransition(''); // Avoid unexpected delays
+            if(partTransition) setPartTransition(''); // Avoid unexpected delays
             return;
         }
         if (!robot.ref.current) return;
