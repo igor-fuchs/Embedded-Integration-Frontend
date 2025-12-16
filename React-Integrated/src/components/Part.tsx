@@ -103,10 +103,12 @@ export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyo
     useEffect(() => {
         if (!robot.isGrabbed) {
             previousRobotPosition.current = { x: null, y: null };
-            if (partTransition) setPartTransition(''); // Avoid unexpected delays
+            if (partTransition) {
+                setPartTransition(''); // Avoid unexpected delays
+            }
             return;
         }
-        if (!robot.ref.current) return;
+        if (!robot.ref.current || !isTouching(partRef, robot.ref)) return;
 
         // Extract current robot position from robot.movement
         const currentX = robot.movement.x.transformPx;
@@ -180,6 +182,8 @@ export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyo
                     pushIfColliding(actuator.ref);
                 }
             });
+
+            // Se encostar no data id da rampa, começa o script para descer para a box e para a execução da animação
 
             if (anyAdvance) {
                 actuatorPushAnimationID.current = requestAnimationFrame(animatePush);

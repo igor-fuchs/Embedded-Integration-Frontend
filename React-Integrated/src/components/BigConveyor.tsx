@@ -45,6 +45,11 @@ export default function BigConveyor({ id, ref, running, bodyIndex, bodyStyle, be
                 <Conveyor8mBelt style={{ width: '100%', height: '100%' }} />
                 <Conveyor8mBelt style={{ width: '100%', height: '100%' }} />
             </div>
+
+            {/* Do not change the data-id, it is being used in the file Part.tsx */}
+            <div className="ramp-segment segment-1" data-id="ramp-a" />
+            <div className="ramp-segment segment-2" data-id="ramp-b"/>
+            <div className="ramp-segment segment-3" data-id="ramp-c"/>
         </StyleBigConveyor>
     );
 }

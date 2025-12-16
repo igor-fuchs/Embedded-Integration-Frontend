@@ -41,6 +41,13 @@ export default function Robot({ id, ref, bodyIndex, bodyStyle, moveToHome, moveT
     const RobotBody = id.includes("right") ? RobotRightBody : RobotLeftBody;
     const RobotAxisX = id.includes("right") ? RobotRightAxisX : RobotLeftAxisX;
     const RobotAxisY = id.includes("right") ? RobotRightAxisY : RobotLeftAxisY;
+    const gripperStyle = {
+        width: 18 * scaleFactor,
+        height: 13 * scaleFactor,
+        bottom: 16 * scaleFactor,
+        ...(id.includes("right") ? { left: 0 } : { right: 0 }),
+        //backgroundColor: 'black',
+    };
 
     // Track current X and Y offset so we can stop exactly where we are
     const xOffset = useRef(0);
@@ -69,6 +76,8 @@ export default function Robot({ id, ref, bodyIndex, bodyStyle, moveToHome, moveT
     }, []);
 
     useEffect(() => {
+        if(!ref.current) return;
+
         // If no movement command, do nothing
         if (!moveToHome && !moveToPick && !moveToAntecipation && !moveToDrop) return;
 
@@ -130,27 +139,30 @@ export default function Robot({ id, ref, bodyIndex, bodyStyle, moveToHome, moveT
     }, [moveToHome, moveToPick, moveToAntecipation, moveToDrop]);
 
     return (
-        <StyleRobot id={id} ref={ref} style={bodyStyle}>
+        <StyleRobot id={id} style={bodyStyle}>
             <RobotBody className="body" style={{ zIndex: bodyIndex }} />
 
             {/* Axes Animated - Axis Y is coupled in the Axis X */}
             <div
-                className="axes" 
-                style={{ 
-                    zIndex: axesIndex, 
-                    transform: `translateX(${robotMovement.x.transformPx * scaleFactor}px)`, 
-                    transition: `transform ${robotMovement.x.transitionMs}ms ease` 
-                }} 
+                className="axes"
+                style={{
+                    zIndex: axesIndex,
+                    transform: `translateX(${robotMovement.x.transformPx * scaleFactor}px)`,
+                    transition: `transform ${robotMovement.x.transitionMs}ms ease`
+                }}
             >
                 <RobotAxisX className="axis-x" style={{ zIndex: axisXIndex }} />
-                <RobotAxisY 
-                    className="axis-y" 
-                    style={{ 
-                        zIndex: axisYIndex, 
-                        transform: `translateY(${robotMovement.y.transformPx * scaleFactor}px)`, 
-                        transition: `transform ${robotMovement.y.transitionMs}ms ease` 
-                    }} 
-                />
+                <div
+                    className="axis-y div"
+                    style={{
+                        zIndex: axisYIndex,
+                        transform: `translateY(${robotMovement.y.transformPx * scaleFactor}px)`,
+                        transition: `transform ${robotMovement.y.transitionMs}ms ease`
+                    }}
+                >
+                    <RobotAxisY className="axis-y" />
+                    <div className="gripper" ref={ref} style={gripperStyle} />
+                </div>
             </div>
         </StyleRobot>
     );
