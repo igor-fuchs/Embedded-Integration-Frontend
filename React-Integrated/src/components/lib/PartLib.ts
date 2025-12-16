@@ -6,12 +6,9 @@ export const isTouching = (
     if (!partRef.current || !objectRef.current) return false;
 
     const partRect = partRef.current.getBoundingClientRect();
-    const objectElement = objectRef.current.parentElement;
-    if (!objectElement) return false;
+    const objectRect = objectRef.current.getBoundingClientRect();
 
-    const objectRect = objectElement.getBoundingClientRect();
-
-    // Verifica sobreposição horizontal e vertical
+    // Check for overlap
     const horizontalOverlap =
         partRect.left < objectRect.right && partRect.right > objectRect.left;
 

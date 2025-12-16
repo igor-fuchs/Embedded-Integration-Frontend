@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 interface ConveyorProps {
     $animationDurationMs: number;
+    $running: boolean;
 }
 
 export const StyleConveyor = styled.div<ConveyorProps>`
@@ -19,6 +20,7 @@ export const StyleConveyor = styled.div<ConveyorProps>`
         display: flex;
         flex-direction: column;
         animation: conveyorMove ${props => props.$animationDurationMs}ms linear infinite;
+        animation-play-state: ${props => (props.$running ? 'running' : 'paused')};
     }
 
     @keyframes conveyorMove {

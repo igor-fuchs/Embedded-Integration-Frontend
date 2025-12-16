@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { StylePart } from './styles/Part';
 import { followConveyorAnimation, isTouching } from './lib/PartLib';
 import GreenPart from '../assets/images/green-part.svg?react';
@@ -20,32 +20,68 @@ interface PartProps {
         ref: React.RefObject<HTMLDivElement | null>;
         running: boolean;
     }
-    actuatorARef: React.RefObject<HTMLDivElement | null>;
-    actuatorBRef: React.RefObject<HTMLDivElement | null>;
-    actuatorCRef: React.RefObject<HTMLDivElement | null>;
+    actuatorA: {
+        ref: React.RefObject<HTMLDivElement | null>;
+        movement: { retract: boolean, advance: boolean };
+    }
+    actuatorB: {
+        ref: React.RefObject<HTMLDivElement | null>;
+        movement: { retract: boolean, advance: boolean };
+    }
+    actuatorC: {
+        ref: React.RefObject<HTMLDivElement | null>;
+        movement: { retract: boolean, advance: boolean };
+    }
     scaleFactor: number;
 }
 
-export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyor, actuatorARef, actuatorBRef, actuatorCRef, scaleFactor }: PartProps) {
+export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyor, actuatorA, actuatorB, actuatorC, scaleFactor }: PartProps) {
     const partRef = useRef<HTMLDivElement>(null);
     const [offset, setOffset] = useState({
         x: 81.5,
         y: -170,
     });
-    
-    // Conveyor vars
+
+    // Conveyor dependencies
     const conveyorAnimationID = useRef<number | null>(null);
     const conveyorFrameTime = useRef<number>(0);
 
-    //Big conveyor vars
+    //Big conveyor dependencies
     const bigConveyorAnimationID = useRef<number | null>(null);
     const bigConveyorFrameTime = useRef<number>(0);
 
-    // Robot vars
+    // Robot dependencies
     const previousRobotPosition = useRef({ x: null, y: null } as { x: number | null; y: number | null }); // Track previous robot position for incremental movement
     const [partTransition, setPartTransition] = useState<string>('');
+    const actuatorPushAnimationID = useRef<number | null>(null);
 
+    // Actuator dependencies
+    const pushIfColliding = useCallback(
+        (actuatorRef: React.RefObject<HTMLDivElement | null>, pushForce: number = 5) => {
+            if (!partRef.current || !actuatorRef.current) return;
 
+            const partRect = partRef.current.getBoundingClientRect();
+            const actuatorRect = actuatorRef.current.getBoundingClientRect();
+
+            const isColliding =
+                partRect.left < actuatorRect.right &&
+                partRect.right > actuatorRect.left &&
+                partRect.top < actuatorRect.bottom &&
+                partRect.bottom > actuatorRect.top;
+
+            if (!isColliding) return;
+
+            const partCenterX = partRect.left + partRect.width / 2;
+            const actuatorCenterX = actuatorRect.left + actuatorRect.width / 2;
+            const directionX = partCenterX - actuatorCenterX;
+
+            if (directionX === 0) return;
+
+            const deltaX = Math.sign(directionX) * (pushForce / scaleFactor);
+            setOffset(prev => ({ ...prev, x: prev.x + deltaX }));
+        },
+        [scaleFactor]
+    );
 
     // #region First Conveyor
     useEffect(() => {
@@ -121,6 +157,44 @@ export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyo
 
 
     }, [bigConveyor.running]);
+    // #endregion
+
+    // #region Actuators
+    useEffect(() => {
+
+        // If any actuator is retracting, stop the push animation
+        if (actuatorA.movement.retract || actuatorB.movement.retract || actuatorC.movement.retract) {
+            if (actuatorPushAnimationID.current) {
+                cancelAnimationFrame(actuatorPushAnimationID.current);
+                actuatorPushAnimationID.current = null;
+            }
+            return;
+        }
+
+        const animatePush = () => {
+            [actuatorA, actuatorB, actuatorC].map(actuator => {
+                if (actuator.movement.advance) {
+                    pushIfColliding(actuator.ref);
+                }
+            });
+
+            if (actuatorA.movement.advance || actuatorB.movement.advance || actuatorC.movement.advance) {
+                actuatorPushAnimationID.current = requestAnimationFrame(animatePush);
+            } else {
+                actuatorPushAnimationID.current = null;
+            }
+        };
+
+        actuatorPushAnimationID.current = requestAnimationFrame(animatePush);
+
+        return () => {
+            if (actuatorPushAnimationID.current) {
+                cancelAnimationFrame(actuatorPushAnimationID.current);
+                actuatorPushAnimationID.current = null;
+            }
+        };
+
+    }, [actuatorA.movement.advance, actuatorB.movement.advance, actuatorC.movement.advance, pushIfColliding]);
     // #endregion
 
     return (

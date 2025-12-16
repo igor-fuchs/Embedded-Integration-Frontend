@@ -1,10 +1,6 @@
 import styled from "styled-components";
 
-interface ActuatorProps {
-    $xOffset: number;
-}
-
-export const StyleActuator = styled.div<ActuatorProps>`
+export const StyleActuator = styled.div`
     .body {
         position: relative;
         width: 100%;
@@ -18,8 +14,6 @@ export const StyleActuator = styled.div<ActuatorProps>`
         top: 0;
         width: 100%;
         height: 100%;
-        transform: translateX(${(props) => props.$xOffset}px);
-        transition: transform 400ms ease;
     }
 
     .piston, .rod{

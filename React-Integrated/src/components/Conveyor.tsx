@@ -29,21 +29,15 @@ export default function Conveyor({ id, ref, bodyIndex, bodyStyle, beltStyle, run
         ref.current.dataset.speedMs = (totalMovement / animationDurationMs).toString();
     }, [scaleFactor]); // Ensure it recalculates if scaleFactor changes
 
-
-    useEffect(() => {
-        if (!ref.current) return;
-        ref.current.style.animationPlayState = running ? 'running' : 'paused';
-    }, [running]);
-
     return (
-        <StyleConveyor id={id} style={bodyStyle} $animationDurationMs={animationDurationMs} >
+        <StyleConveyor id={id} ref={ref} style={bodyStyle} $animationDurationMs={animationDurationMs} $running={running} >
             <Conveyor4mBody
                 className='body'
                 style={{ zIndex: bodyIndex }}
             />
 
             {/* Belt Animated */}
-            <div ref={ref} className='belt' style={{ ...beltStyle, zIndex: beltIndex }}>
+            <div className='belt' style={{ ...beltStyle, zIndex: beltIndex }}>
                 <Conveyor4mBelt style={{ width: '100%', height: '100%' }} />
                 <Conveyor4mBelt style={{ width: '100%', height: '100%' }} />
             </div>

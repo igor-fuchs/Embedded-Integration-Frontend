@@ -3,12 +3,11 @@ import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from "react-i18next";
 import BigConveyor from './BigConveyor';
 import Conveyor from './Conveyor';
-import Robot from './Robot';
+import Robot, {type RobotMovement} from './Robot';
 import Actuator from './Actuator';
+import Part from './Part';
 import PlayButtonIcon from '../assets/icons/play-button-icon.svg';
 import FactoryBackground from '../assets/images/factory-background.svg';
-import Part from './Part';
-import type { RobotMovement } from './Robot';
 
 // Adicionar um efeito de sombra no arco da esteira para dar profundidade 
 
@@ -36,7 +35,7 @@ export function PlayFactory() {
     const [actuatorBMoving, setActuatorBMoving] = useState<{ retract: boolean, advance: boolean }>({ retract: false, advance: false });
     const [actuatorCMoving, setActuatorCMoving] = useState<{ retract: boolean, advance: boolean }>({ retract: false, advance: false });
     const styleTestButtons = (value: boolean): React.CSSProperties => ({
-        padding: '10px 15px',
+        padding: '10px 10px',
         backgroundColor: value ? 'rgba(76, 175, 80, 0.7)' : 'rgba(200, 200, 200, 0.5)',
         color: 'white',
         border: 'none',
@@ -198,6 +197,43 @@ export function PlayFactory() {
                 >
                     Big Conveyor Running: {bigConveyorRunning ? 'ON' : 'OFF'}
                 </button>
+                <button
+                    onClick={() => setActuatorAMoving({ ...actuatorAMoving, advance: !actuatorAMoving.advance})}
+                    style={styleTestButtons(actuatorAMoving.advance)}
+                >
+                    Actuator A Advance: {actuatorAMoving.advance ? 'ON' : 'OFF'}
+                </button>
+                <button
+                    onClick={() => setActuatorAMoving({ ...actuatorAMoving, retract: !actuatorAMoving.retract})}
+                    style={styleTestButtons(actuatorAMoving.retract)}
+                >
+                    Actuator A Retract: {actuatorAMoving.retract ? 'ON' : 'OFF'}
+                </button>
+                <button
+                    onClick={() => setActuatorBMoving({ ...actuatorBMoving, advance: !actuatorBMoving.advance})}
+                    style={styleTestButtons(actuatorBMoving.advance)}
+                >
+                    Actuator B Advance: {actuatorBMoving.advance ? 'ON' : 'OFF'}
+                </button>
+                <button
+                    onClick={() => setActuatorBMoving({ ...actuatorBMoving, retract: !actuatorBMoving.retract})}
+                    style={styleTestButtons(actuatorBMoving.retract)}
+                >
+                    Actuator B Retract: {actuatorBMoving.retract ? 'ON' : 'OFF'}
+                </button>
+                <button
+                    onClick={() => setActuatorCMoving({ ...actuatorCMoving, advance: !actuatorCMoving.advance})}
+                    style={styleTestButtons(actuatorCMoving.advance)}
+                >
+                    Actuator C Advance: {actuatorCMoving.advance ? 'ON' : 'OFF'}
+                </button>
+                <button
+                    onClick={() => setActuatorCMoving({ ...actuatorCMoving, retract: !actuatorCMoving.retract})}
+                    style={styleTestButtons(actuatorCMoving.retract)}
+                >
+                    Actuator C Retract: {actuatorCMoving.retract ? 'ON' : 'OFF'}
+                </button>
+
             </div>
 
             {
@@ -304,6 +340,7 @@ export function PlayFactory() {
                                         axisStyle={equipamentStyle({ width: 144, height: 44, top: 0, left: -56 })}
                                         advance={actuatorCMoving.advance}
                                         retract={actuatorCMoving.retract}
+                                        scaleFactor={getScaleCoefficient()}
                                     />
                                     <Actuator
                                         id={"actuator-b"}
@@ -313,6 +350,7 @@ export function PlayFactory() {
                                         axisStyle={equipamentStyle({ width: 144, height: 44, top: 0, left: -56 })}
                                         advance={actuatorBMoving.advance}
                                         retract={actuatorBMoving.retract}
+                                        scaleFactor={getScaleCoefficient()}
                                     />
                                     <Actuator
                                         id={"actuator-a"}
@@ -322,6 +360,7 @@ export function PlayFactory() {
                                         axisStyle={equipamentStyle({ width: 144, height: 44, bottom: 0, left: -56 })}
                                         advance={actuatorAMoving.advance}
                                         retract={actuatorAMoving.retract}
+                                        scaleFactor={getScaleCoefficient()}
                                     />
                                 </section>
 
@@ -342,9 +381,18 @@ export function PlayFactory() {
                                             ref: bigConveyorRef,
                                             running: bigConveyorRunning,
                                         }}
-                                        actuatorARef={actuatorARef}
-                                        actuatorBRef={actuatorBRef}
-                                        actuatorCRef={actuatorCRef}
+                                        actuatorA={{
+                                            ref: actuatorARef,
+                                            movement: actuatorAMoving
+                                        }}
+                                        actuatorB={{
+                                            ref: actuatorBRef,
+                                            movement: actuatorBMoving
+                                        }}
+                                        actuatorC={{
+                                            ref: actuatorCRef,
+                                            movement: actuatorCMoving
+                                        }}
                                         scaleFactor={getScaleCoefficient()}
                                     />
                                 </section>
