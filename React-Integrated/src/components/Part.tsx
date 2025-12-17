@@ -66,32 +66,17 @@ export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyo
             const actuatorRect = actuatorRef.current.getBoundingClientRect();
 
             // Handle ramp animation triggering
-            if (rampAnimation === 0) { // Already animating, then avoid unnecessary calculations
+            if (rampAnimation === 0) { // Not animating yet, then avoid unnecessary calculations
+
+                const rampIdMap: Record<number, string> = {
+                    0: "ramp-a",
+                    1: "ramp-b",
+                    2: "ramp-c",
+                };
 
                 const parentElement = bigConveyor.ref.current!.parentElement!;
-                let rampRect: DOMRect | null = null; // To be assigned based on index
-
-                switch (index) {
-                    case 0: // Actuator A
-                        const rampA = parentElement.querySelector('[data-id="ramp-a"]') as HTMLDivElement;
-                        rampRect = rampA.getBoundingClientRect();
-                        break;
-
-                    case 1: // Actuator B
-                        const rampB = parentElement.querySelector('[data-id="ramp-b"]') as HTMLDivElement;
-                        rampRect = rampB.getBoundingClientRect();
-                        console.log("ramp B rect acquired");
-                        break;
-
-                    case 2: // Actuator C
-                        const rampC = parentElement.querySelector('[data-id="ramp-c"]') as HTMLDivElement;
-                        rampRect = rampC.getBoundingClientRect();
-                        console.log("ramp C rect acquired");
-                        break;
-
-                    default:
-                        break;
-                }
+                const targetRamp = parentElement.querySelector(`[data-id="${rampIdMap[index]}"]`) as HTMLElement;
+                const rampRect = targetRamp!.getBoundingClientRect();
 
                 const isInsideRamp =
                     rampRect &&
@@ -275,12 +260,24 @@ export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyo
         const deltaY = targetCenterY - partCenterY;
 
         // Smoothly move the part to the ramp end center
-        setPartTransition('transform 1000ms ease-in');
+        const animationTimeMs = 1000;
+        setPartTransition(`transform ${animationTimeMs}ms ease-in`);
         setOffset(prev => ({
             ...prev,
             x: prev.x + deltaX / scaleFactor,
             y: prev.y + deltaY / scaleFactor,
         }));
+
+        // When arrive in position down 15 px
+        const timeoutId = setTimeout(() => {
+            setPartTransition('transform 500ms ease-in');
+            setOffset(prev => ({
+                ...prev,
+                y: prev.y + (15 / scaleFactor),
+            }));
+        }, animationTimeMs + 100); // Wait for the first animation to complete
+
+        return () => clearTimeout(timeoutId);
 
     }, [rampAnimation, scaleFactor]);
     // #endregion
