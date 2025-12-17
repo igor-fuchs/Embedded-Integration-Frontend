@@ -50,6 +50,7 @@ export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyo
     //Big conveyor dependencies
     const bigConveyorAnimationID = useRef<number | null>(null);
     const bigConveyorFrameTime = useRef<number>(0);
+    const [rampAnimation, setRampAnimation] = useState<number>(0);
 
     // Robot dependencies
     const previousRobotPosition = useRef({ x: null, y: null } as { x: number | null; y: number | null }); // Track previous robot position for incremental movement
@@ -58,11 +59,52 @@ export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyo
 
     // Actuator dependencies
     const pushIfColliding = useCallback(
-        (actuatorRef: React.RefObject<HTMLDivElement | null>, pushForce: number = 5) => {
+        (actuatorRef: React.RefObject<HTMLDivElement | null>, index: number, pushForce: number = 5) => {
             if (!partRef.current || !actuatorRef.current) return;
 
             const partRect = partRef.current.getBoundingClientRect();
             const actuatorRect = actuatorRef.current.getBoundingClientRect();
+
+            // Handle ramp animation triggering
+            if (rampAnimation === 0) { // Already animating, then avoid unnecessary calculations
+
+                const parentElement = bigConveyor.ref.current!.parentElement!;
+                let rampRect: DOMRect | null = null; // To be assigned based on index
+
+                switch (index) {
+                    case 0: // Actuator A
+                        const rampA = parentElement.querySelector('[data-id="ramp-a"]') as HTMLDivElement;
+                        rampRect = rampA.getBoundingClientRect();
+                        break;
+
+                    case 1: // Actuator B
+                        const rampB = parentElement.querySelector('[data-id="ramp-b"]') as HTMLDivElement;
+                        rampRect = rampB.getBoundingClientRect();
+                        console.log("ramp B rect acquired");
+                        break;
+
+                    case 2: // Actuator C
+                        const rampC = parentElement.querySelector('[data-id="ramp-c"]') as HTMLDivElement;
+                        rampRect = rampC.getBoundingClientRect();
+                        console.log("ramp C rect acquired");
+                        break;
+
+                    default:
+                        break;
+                }
+
+                const isInsideRamp =
+                    rampRect &&
+                    rampRect.left <= partRect.left &&
+                    rampRect.right >= partRect.right &&
+                    rampRect.top <= partRect.top &&
+                    rampRect.bottom >= partRect.bottom;
+
+                // trigger ramp animation
+                if (isInsideRamp) {
+                    setRampAnimation(index + 1);
+                }
+            }
 
             const isColliding =
                 partRect.left < actuatorRect.right &&
@@ -80,8 +122,9 @@ export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyo
 
             const deltaX = Math.sign(directionX) * (pushForce / scaleFactor);
             setOffset(prev => ({ ...prev, x: prev.x + deltaX }));
+            return;
         },
-        [scaleFactor]
+        [scaleFactor, rampAnimation]
     );
     // #endregion
 
@@ -159,7 +202,6 @@ export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyo
             setOffset
         });
 
-
     }, [bigConveyor.running]);
     // #endregion
 
@@ -177,13 +219,11 @@ export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyo
         }
 
         const animatePush = () => {
-            [actuatorA, actuatorB, actuatorC].map(actuator => {
+            [actuatorA, actuatorB, actuatorC].map((actuator, index) => {
                 if (actuator.movement.advance) {
-                    pushIfColliding(actuator.ref);
+                    pushIfColliding(actuator.ref, index); // Starts pushing, and ramp animation
                 }
             });
-
-            // Se encostar no data id da rampa, começa o script para descer para a box e para a execução da animação
 
             if (anyAdvance) {
                 actuatorPushAnimationID.current = requestAnimationFrame(animatePush);
@@ -204,6 +244,49 @@ export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyo
     }, [actuatorA.movement.advance, actuatorB.movement.advance, actuatorC.movement.advance, pushIfColliding]);
     // #endregion
 
+    // #region Ramp
+    useEffect(() => {
+        if (rampAnimation === 0) return;
+        if (!partRef.current || !bigConveyor.ref.current) return;
+
+        const parentElement = bigConveyor.ref.current.parentElement;
+        if (!parentElement) return;
+
+        const rampIdMap: Record<number, string> = {
+            1: "ramp-a-end",
+            2: "ramp-b-end",
+            3: "ramp-c-end",
+        };
+        const rampId = rampIdMap[rampAnimation];
+        if (!rampId) return;
+
+        const targetRamp = parentElement.querySelector(`[data-id="${rampId}"]`) as HTMLElement | null;
+        if (!targetRamp) return;
+
+        const partRect = partRef.current.getBoundingClientRect();
+        const rampRect = targetRamp.getBoundingClientRect();
+
+        const targetCenterX = (rampRect.left + rampRect.right) / 2;
+        const targetCenterY = (rampRect.top + rampRect.bottom) / 2;
+        const partCenterX = (partRect.left + partRect.right) / 2;
+        const partCenterY = (partRect.top + partRect.bottom) / 2;
+
+        const deltaX = targetCenterX - partCenterX;
+        const deltaY = targetCenterY - partCenterY;
+
+        // Smoothly move the part to the ramp end center
+        setPartTransition('transform 1000ms ease-in');
+        setOffset(prev => ({
+            ...prev,
+            x: prev.x + deltaX / scaleFactor,
+            y: prev.y + deltaY / scaleFactor,
+        }));
+
+    }, [rampAnimation, scaleFactor]);
+    // #endregion
+
+
+    // #region Component Render
     return (
         <StylePart
             ref={partRef}
@@ -218,4 +301,5 @@ export default function Part({ bodyIndex, bodyStyle, conveyor, robot, bigConveyo
             <GreenPart className='part' />
         </StylePart>
     );
+    // #endregion
 }

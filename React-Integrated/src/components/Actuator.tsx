@@ -30,8 +30,8 @@ export default function Actuator({ id, ref, bodyIndex, bodyStyle, axisStyle, adv
     useEffect(() => {
         if (!ref.current) return;
 
-        // NOTE: Movement maximum 0 and 41 px
-        const advancePosition = 41;
+        // NOTE: Movement maximum 0 and 42 px
+        const advancePosition = 42;
         const retractPosition = 0;
 
         ref.current.dataset.retractPosition = `${retractPosition}`;

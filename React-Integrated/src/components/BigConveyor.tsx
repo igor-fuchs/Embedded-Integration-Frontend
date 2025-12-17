@@ -23,6 +23,20 @@ export default function BigConveyor({ id, ref, running, bodyIndex, bodyStyle, be
 
     const animationDurationMs = 10000;
 
+    const rampLeftInPixels = 57;
+    const rampTopInPixels = {
+        a: 20,
+        b: 93,
+        c: 166,
+    }
+    const rampStyle = {
+        position: "absolute" as const,
+        width: 30 * scaleFactor,
+        height: 50 * scaleFactor,
+        //backgroundColor: "black",
+        //zIndex: 100,
+    };
+
     useEffect(() => {
         if (!ref.current) return;
 
@@ -35,7 +49,7 @@ export default function BigConveyor({ id, ref, running, bodyIndex, bodyStyle, be
     }, [scaleFactor]); // Ensure it recalculates if scaleFactor changes
 
     return (
-        <StyleBigConveyor id={id}  style={bodyStyle} $animationDurationMs={animationDurationMs} $running={running} >
+        <StyleBigConveyor id={id} style={bodyStyle} $animationDurationMs={animationDurationMs} $running={running} >
             <Conveyor8mBody className="body" style={{ zIndex: bodyIndex }} />
             <Conveyor8mArch className="arch" style={{ zIndex: archIndex }} />
             <Conveyor8mBoxes className="boxes" style={{ zIndex: boxesIndex }} />
@@ -47,9 +61,13 @@ export default function BigConveyor({ id, ref, running, bodyIndex, bodyStyle, be
             </div>
 
             {/* Do not change the data-id, it is being used in the file Part.tsx */}
-            <div className="ramp-segment segment-1" data-id="ramp-a" />
-            <div className="ramp-segment segment-2" data-id="ramp-b"/>
-            <div className="ramp-segment segment-3" data-id="ramp-c"/>
+            <div data-id="ramp-a" className="ramp-segment ramp-a" style={{ ...rampStyle, top: rampTopInPixels.c * scaleFactor, left: rampLeftInPixels * scaleFactor }} />
+            <div data-id="ramp-b" className="ramp-segment ramp-b" style={{ ...rampStyle, top: rampTopInPixels.b * scaleFactor, left: rampLeftInPixels * scaleFactor }} />
+            <div data-id="ramp-c" className="ramp-segment ramp-c" style={{ ...rampStyle, top: rampTopInPixels.a * scaleFactor, left: rampLeftInPixels * scaleFactor }} />
+
+            <div data-id="ramp-a-end" className="ramp-segment ramp-a end" style={{ ...rampStyle, top: (rampTopInPixels.c + 30) * scaleFactor, left: (rampLeftInPixels + 94) * scaleFactor }} />
+            <div data-id="ramp-b-end" className="ramp-segment ramp-b end" style={{ ...rampStyle, top: (rampTopInPixels.b + 30) * scaleFactor, left: (rampLeftInPixels + 94) * scaleFactor }} />
+            <div data-id="ramp-c-end" className="ramp-segment ramp-c end" style={{ ...rampStyle, top: (rampTopInPixels.a + 30) * scaleFactor, left: (rampLeftInPixels + 94) * scaleFactor }} />
         </StyleBigConveyor>
     );
 }
