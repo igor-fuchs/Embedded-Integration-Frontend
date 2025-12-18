@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
+namespace Bridge.Config;
 
-namespace Bridge.Config
+public static class Config
 {
-    public static class Config
-    {
-        public static Uri OPCUA_ENDPOINT { get; } = new Uri("opc.tcp://192.168.1.20:4840");
-        public static string WEBSOCKET_PREFIX { get; } = "http://localhost:5000/ws/";
+    public static Uri OPCUA_ENDPOINT { get; } = new Uri("opc.tcp://192.168.1.20:4840");
+    public static string WEBSOCKET_PREFIX { get; } = "http://localhost:5000/ws/";
 
-        // NodeIds carregados a partir do arquivo de sinais usados
-        public static List<string> NODE_IDS_TO_MONITOR { get; } = new List<string>
+    // NodeIds carregados a partir do arquivo de sinais usados
+    public static List<string> NODE_IDS_TO_MONITOR { get; } = new List<string>
         {
             // ST005
             @"ns=3;s=""ST005_BUFFER_SHM"".""CONVEYOR_SHM"".""STATUS"".""RUNNING""",
@@ -70,5 +67,5 @@ namespace Bridge.Config
             @"ns=3;s=""ST010_SEPARATOR_SHM"".""ACTUATOR_C_SHM"".""STATUS"".""ADVANCE_POSITION""",
             @"ns=3;s=""ST010_SEPARATOR_SHM"".""ACTUATOR_C_SHM"".""STATUS"".""RETRACT_POSITION""",
         };
-    }
 }
+
