@@ -1,4 +1,4 @@
-import { StyleHome } from './styles/Home';
+import { StyleHome } from '@styles/Home';
 import Hero from '../components/sections/Hero';
 import Technologies from '../components/sections/Technologies';
 import About from '../components/sections/About';

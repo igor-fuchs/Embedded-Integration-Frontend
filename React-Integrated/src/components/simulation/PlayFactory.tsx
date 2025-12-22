@@ -1,4 +1,4 @@
-import { StylePlayFactory } from '../.styles/PlayFactory';
+import { StylePlayFactory } from '@styles/PlayFactory';
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from "react-i18next";
 import BigConveyor from './BigConveyor';

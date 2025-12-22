@@ -1,4 +1,4 @@
-import { StyleContact } from "../../.styles/Contact";
+import { StyleContact } from "@styles/Contact";
 import GithubIcon from "../../../assets/icons/github-icon.svg";
 import ContactIcon from "../../../assets/icons/contact-icon.svg";
 import LinkedinIcon from "../../../assets/icons/linkedin-icon.svg?react";

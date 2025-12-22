@@ -1,4 +1,4 @@
-import Contact, { LINKS } from './Contact.tsx'
+import Contact, { LINKS } from './Contact'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, it, expect, vi, beforeEach } from 'vitest'

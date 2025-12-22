@@ -1,4 +1,4 @@
-import { StyleHero } from "../.styles/Hero";
+import { StyleHero } from "@styles/Hero";
 import StatusIndicator from "./StatusIndicator";
 import PlayButtonIcon from '../../assets/icons/play-button-icon.svg';
 import GithubIcon from '../../assets/icons/github-icon.svg';

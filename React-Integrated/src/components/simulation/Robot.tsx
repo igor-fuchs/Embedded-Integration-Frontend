@@ -1,4 +1,4 @@
-import { StyleRobot } from "../.styles/Robot"
+import { StyleRobot } from "@styles/Robot"
 import React, { useEffect, useRef } from "react";
 import RobotRightBody from "../../assets/images/robot-right-body.svg?react";
 import RobotRightAxisX from "../../assets/images/robot-right-axis-x.svg?react";

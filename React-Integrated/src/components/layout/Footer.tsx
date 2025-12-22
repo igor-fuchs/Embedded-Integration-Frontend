@@ -1,4 +1,4 @@
-import { StyleFooter } from "../.styles/Footer";
+import { StyleFooter } from "@styles/Footer";
 import logo from "../../assets/logo.svg";
 
 export default function Footer() {

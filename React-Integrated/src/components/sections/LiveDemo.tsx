@@ -1,4 +1,4 @@
-import { StyleLiveDemo } from "../.styles/LiveDemo";
+import { StyleLiveDemo } from "@styles/LiveDemo";
 import { useTranslation } from "react-i18next";
 import { PlayFactory } from "../simulation/PlayFactory";
 

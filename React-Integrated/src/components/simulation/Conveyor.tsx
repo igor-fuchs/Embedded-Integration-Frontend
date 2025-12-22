@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { StyleConveyor } from '../.styles/Conveyor';
+import { StyleConveyor } from '@styles/Conveyor';
 import Conveyor4mBody from '../../assets/images/conveyor-4m-body.svg?react';
 import Conveyor4mBelt from '../../assets/images/conveyor-4m-belt.svg?react';
 
