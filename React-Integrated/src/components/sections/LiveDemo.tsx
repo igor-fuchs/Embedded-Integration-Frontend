@@ -1,6 +1,6 @@
 import { StyleLiveDemo } from "@styles/LiveDemo";
 import { useTranslation } from "react-i18next";
-import { PlayFactory } from "../simulation/PlayFactory";
+import { PlayFactory } from "@simulation/PlayFactory";
 
 import ConnectionIcon from "@assets/icons/connection-icon.svg";
 import AssistantIcon from "@assets/icons/ai-assistant-icon.svg";
