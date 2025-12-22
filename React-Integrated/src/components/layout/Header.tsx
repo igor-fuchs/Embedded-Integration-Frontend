@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { StyleHeader } from "@styles/Header";
 import useScrollToSection from "@hooks/useScrollToSection";
 import useOnClickOutside from "@hooks/useOnClickOutside";
-import Logo from "../../assets/logo.svg";
-import MenuBarIcon from "../../assets/icons/menu-bar-icon.svg";
+import Logo from "@assets/logo.svg";
+import MenuBarIcon from "@assets/icons/menu-bar-icon.svg";
 import MenuAndLanguageSelector, { type MenuItem } from "./MenuAndLanguageSelector";
 
 export default function Header() {
