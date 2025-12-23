@@ -2,7 +2,7 @@ import { StyleAbout } from "@styles/About";
 import IndustrialIcon from "@assets/icons/industrial-icon.svg";
 import WebInterfaceIcon from "@assets/icons/web-interface-icon.svg";
 import logo from "@assets/logo.svg";
-import StatusIndicator from "./StatusIndicator";
+import StatusIndicator from "@sections/StatusIndicator";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -17,6 +17,8 @@ export default function About() {
             ([entry]) => {
                 if (entry.isIntersecting && !isVisibleGrid) {
                     setIsVisibleGrid(true);
+                } else if (!entry.isIntersecting && isVisibleGrid) {
+                    setIsVisibleGrid(false);
                 }
             },
             {
@@ -29,7 +31,6 @@ export default function About() {
             observer.observe(gridRef.current);
         }
         
-        // Cleanup function - works after to generate the element once time and it appears in the screen
         return () => {
             if (gridRef.current) {
                 observer.unobserve(gridRef.current);
@@ -38,7 +39,7 @@ export default function About() {
     }, [isVisibleGrid]);
 
     return (
-        <StyleAbout id="About">
+        <StyleAbout id="About" data-testid="about-section">
             <div className="about-container">
                 <div className="about-content">
                     <div className="about-header">
