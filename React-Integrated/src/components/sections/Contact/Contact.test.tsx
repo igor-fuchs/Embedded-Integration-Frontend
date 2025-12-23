@@ -5,10 +5,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 describe('Contact Component', () => {
   beforeEach(() => {
-    vi.clearAllMocks()
-    vi.stubGlobal('open', vi.fn())
-
-    render(<Contact />)
+    vi.clearAllMocks();
+    render(<Contact />);
   })
 
   describe('Render', () => {
@@ -32,6 +30,10 @@ describe('Contact Component', () => {
   });
 
   describe('Interactions', () => {
+    beforeEach(() => {
+      vi.stubGlobal('open', vi.fn());
+    });
+
     it('Open the GitHub repository in a new tab', async () => {
       const user = userEvent.setup();
 
